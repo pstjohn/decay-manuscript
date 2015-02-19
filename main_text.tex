@@ -85,7 +85,6 @@ Finally, we calculate the genome-wide effects of siRNA knockdown on single-cell 
 Our results should prove especially important in the future search for small molecule circadian therapeutics, as it allows the effect of candidate drugs on single-cell noise to be quantified in a high-throughput manner.
 
 
-
 \section*{Materials and Methods}
 
 \subsection*{Fitting a damped sinusoid to experimental data}
@@ -95,7 +94,7 @@ A damped sinusoid, specified by:
 \]
 is fit to experimental data $x_i(t_i), \  i \in \{0, \dots, N-1\}$.
 The $x_i$ data points are first detrended using Hodrick-Prescott filter with a smoothing parameter $\gamma = 0.05\left(\nicefrac{24 \text{ hrs}}{s}\right)^4$, in which $s$ is the sampling rate (in hours) \cite{Ravn2002}.
-The detrended data is then filtered using a low-pass filter to remove high-frequency noise (forward-backward Butterworth filter with $n = 5,\ w_c = 0.1)$.
+The detrended data is then filtered using a low-pass filter to remove high-frequency noise (forward-backward Butterworth filter with $n = 5,\ w_c = 0.1$).
 We denote the detrended and filtered experimental data by $y_i(t_i)$.
 For numerical efficiency, the period, $T$, and damping rate, $d$, parameters are fit first using a matrix pencil method \cite{Hua1990}, reviewed in \cite{Zielinski2011}.
 Amplitude, $A$, and phase, $\theta$, parameters are subsequently fit using a linear least-squares regression.
@@ -115,7 +114,7 @@ As in the original study, various parameters describing the average noise level 
 Traces were denoised and detrended by keeping only the $(8 \text{hr}, 258 \text{hr})$ wavelet components.
 From these smoothed trajectories, a Hilbert transform was used estimate points at which the phase crossed $0$ to find period and amplitude coefficients of variation.
 An additional noise parameter, the standard deviation in the $(1 \text{hr}, 8 \text{hr})$ wavelet components divided by the overall rhythm amplitude, was used to quantify the high-frequency noise of the system.
-From these three noise metric, a combined noise variable was constructed via a principle component analysis (using scikit-learn, \url{http://scikit-learn.org/}).
+From these three noise variables, a combined noise metric was constructed by projecting the variables along their first principle component (using scikit-learn, \url{http://scikit-learn.org/}).
 Cells were ranked according to this combined noise metric, and a high-noise group and low-noise group were constructed by taking the 39 highest-noise and lowest-noise cells, respectively.
 The raw bioluminescence profiles were not initially synchronized, so in order to simulate the gradual desynchronization of a group of oscillators the traces were offset to have the same starting phase. 
 This was accomplished by starting each trace at the first phase zero-crossing, which were found using a Hilbert transform.
@@ -130,7 +129,7 @@ The observed test statistic, $|d_h - d_l| = 6.65\times10^{-3}$, was found to be 
 
 \subsection*{Quantifying dose-dependent effects of small molecule modulators}
 Bioluminescence traces ($s = 1.67,\ N=71$) from the application of increasing concentrations of small molecule were fit using the method described in a previous section.
-Because the small molecules were toxic to the cells at very high concentrations, experiments were removed from further analysis when the $R^2$ of the sinusoidal regression fell below $0.80$.
+Because the small molecules were toxic to the cells at very high concentrations, experiments were removed from further analysis when the $R^2$ of the sinusoidal regression fell below $0.80$ (Figure~\ref{fig:small_molecule_r2}).
 
 \subsection*{{In silico} prediction of small molecule experiments}
 A previously published mathematical model of circadian rhythms was used to predict the effects on population damping rate from the dose-dependent small molecule experiments \cite{Hirota2012}.
@@ -146,7 +145,7 @@ We calculated an average experimental damping rate of $d = 0.0151$ from the $0 \
 {\itshape In silico} damping rates were calculated for logarithmically space values of $\Omega \in (100, 500)$.
 Ten independent groups of $1,000$ oscillators were simulated for each $\Omega$, from which the means and standard errors were found.
 Simulations in which $R^2 < 0.90$ were removed from further analysis.
-A weighted least-squares regression (using statsmodels, \url{http://statsmodels.sourceforge.net/}) was performed for $\log d$ vs.\ $\log \Omega$, using the $\log \text{SEM}$ of each measurement as a regression weight.
+A weighted least-squares regression (using statsmodels, \url{http://statsmodels.sourceforge.net/}) was performed for $\log d$ vs.\ $\log \Omega$, using the $\log \text{SEM}$ of each measurement as a regression weight (Figure~\ref{fig:vol_calibration}).
 The best fit was found to be $\Omega = 226.3 \pm 9.0$.
 
 \subsubsection*{Parameter knockdown experiments}
@@ -160,7 +159,8 @@ Simulations in which $R^2 < 0.90$ were removed from further analysis.
 We analyzed the supplemental annotations and data for the $111,743$ wells ($s=2,\ N=72$) in the Zhang {\itshape et al.,} 2009 screen \cite{Zhang2009}.
 Fits for which the $R^2 < 0.80$ were discarded.
 We rescaled amplitude values on a logarithmic basis, as these were more normally distributed.
-Parameters were normalized on a plate-by-plate basis using a robust z-score, median $\pm$ median absolute deviation \cite{Birmingham2009}.
+Plate to plate variation, as shown in Figure~\ref{fig:plate_variation}, was more severe than variation on a well-to-well basis, Figure~\ref{fig:well_variation}.
+Parameters were therefore normalized on a plate-by-plate basis using a robust z-score, median $\pm$ median absolute deviation \cite{Birmingham2009}. 
 We chose the ``control'' wells to be those which contained no siRNA, as these proved to be more numerous than those containing reference siRNA perturbations and were clustered similarly to the highest-density regions of the perturbed fits.
 
 \subsubsection*{Detecting outlier perturbations}
@@ -174,43 +174,83 @@ The decision boundary was then used to classify the averaged perturbed points, f
 
 \section*{Results and Discussion}
 
+\subsection*{Single-cell stochastic noise is manifested in damped population-level rhythms}
+
+We first sought to determine whether single-cell stochastic noise affects the population-level damping rate in cultured bioluminescence cells.
+To do this, we calculated noise characteristics from experimental data on individual PER2::LUC fibroblast cells \cite{Leise2012}.
+We sorted the cells into two groups, a low-noise group and a high-noise group, based on the relative high-frequency noise, period variability, and amplitude variability present in each trace.
+Example rhythms from cells in both groups are shown in Figure~\ref{fig:fibroblast_noise}A.
+Because the cells were not synchronized at the start of the recording, we replicate this effect {\itshape in silico} by shifting each series in time to align their start phases.
+We next calculated expected population-level bioluminescence traces by averaging the cellular PER2::LUC signal in each group.
+Both populations displayed averaged rhythms which resembled a damped sinusoid, similar to those seen in bioluminescence recordings of entire cell cultures .
+Fitting the averaged expression of each group with a damped sinusoid revealed that the low-noise group also had a lower damping rate (Figure~\ref{fig:fibroblast_noise}B).
+The significance of this difference was confirmed via a bootstrap analysis (Figure~\ref{fig:fibroblast_noise}C), where in each bootstrap trial cells were randomly assigned to either the low-noise or the high-noise group.
+
 \begin{figure}[tbp]
   \begin{center}
     \includegraphics[]{figures/pdfs/noise_ts_and_boot.pdf}
   \end{center}
-  \caption{{\bfseries Figure Title.}
-({\bfseries A}) Part A.
-({\bfseries B}) Part B.
-({\bfseries C}) Part C.}
+  \caption{{\bfseries Single-cell bioluminescence recordings show that higher stochastic noise results in faster damping at the population-level.}
+  Data on the bioluminescence of single-cell fibroblasts was taken from Leise {\itshape et al.,} 2012 \cite{Leise2012}.
+({\bfseries A}) Cells were sorted into two groups depending on their degree of stochastic noise. An example trace from each of the two groups is shown, demonstrating different levels of noise present in the dataset.
+({\bfseries B}) After artificially synchronizing each cell, averaged bioluminescence rhythms of each group (solid lines) resemble damped recordings taken at cell culture level. A damped sinusoid fit to both both groups reveals a difference in damping rate, demonstrated by fitted envelope functions ($\pm A\exp{-dt}$, dashed lines).
+({\bfseries C}) The observed absolute difference in damping rate was shown to be significant ($p = 0.0264$) using $10,000$ bootstrap trials.}
 \label{fig:fibroblast_noise}
 \end{figure}
 
+
+\subsection*{Clock perturbations can change single-cell stochastic noise}
+
+% \subsubsection*{A small molecule causes dose-dependent changes in the population-level damping rate of cultured cells}
+
+We next demonstrate that perturbations to the transcriptional oscillator are capable of altering single-cell level stochastic noise.
+The actions small-molecule circadian modulators KL001 and longdaysin are well-characterized, and are known to affect circadian period and amplitude in a dose-dependent fashion \cite{St.John2014}.
+By fitting experimental data on the population-level responses to increasing dosages of each molecule with a damped sinusoid, we show that KL001, but not longdaysin, increases damping rate in a dose-dependent fashion (Figure~\ref{fig:dose_dependence}).
+This change in damping rate is consistent across both reporter systems ({\itshape Bmal1-dLuc} and {\itshape Per2-dLuc}), indicating it is a fundamental property of the overall gene regulatory network.
 
 \begin{figure}[tbp]
   \begin{center}
     \includegraphics[]{figures/pdfs/mainfig_dose.pdf}
   \end{center}
-  \caption{{\bfseries Figure Title.}
-({\bfseries A}) Part A.
-({\bfseries B}) Part B.}
+  \caption{{\bfseries Small molecule modulator KL001 increases damping rate in a dose-dependent fashion.}
+  Experimental data on the dose-dependent effect of small molecules KL001 and Longdaysin on cultured circadian reporter cells was taken from Hirota {\itshape et al.,} 2012 \cite{Hirota2012}.
+({\bfseries A}) Detrended bioluminescence signals from the two cells and two reporter systems, normalized by the fitted amplitude, period, and phase. The normalized bioluminescence highlights the dose-dependent change in damping rate seen with the KL001 application, but not with longdaysin.
+({\bfseries B}) Quantification of the dose-dependent change in damping rate caused by small molecule modulators. While both molecules lead to a dose-dependent increase in period, only KL001 shows a reliable change in damping rate.}
 \label{fig:dose_dependence}
 \end{figure}
 
+% \subsection*{Mathematical model predicts KL001 damping rate increase comes from increased single-cell stochastic noise}
+
+To lend further support to the conclusion that the dose-dependent change in damping rate from KL001 is due to changes in single-cell noise characteristics, we employed a model of circadian rhythms previously used to explain the effects of both small molecule perturbations \cite{St.John2014}.
+In order to capture changes to noise characteristics, the model had to first be converted to a stochastic biochemical system.
+Population-level rhythms were therefore generated by averaging the rhythms of $1,000$ individual, noninteracting oscillators.
+The only free parameter in converting the existing deterministic model to a stochastic one is the cell volume, which was determined by fitting the observed population-level damping rate to the experimental unperturbed controls (Figure~\ref{fig:vol_calibration}).
+
+The model was then used to predict the effects of KL001 and longdaysin administration on single-cell noise and population damping rates (Figure~\ref{fig:simulation}A).
+Reductions in parameters previously attributed to the activities of each small molecule caused dose dependent changes in period and damping rate at the population-level which closely matched experimental results (Figure~\ref{fig:simulation}B).
+As the model includes no cell to cell communication, this difference is manifested solely by changing the noise characteristics of individual cells.
 
 \begin{figure}[tbp]
   \begin{center}
     \includegraphics[]{figures/pdfs/main_fig_simulations.pdf}
   \end{center}
-  \caption{{\bfseries Figure Title.}
-({\bfseries A}) Part A.
-({\bfseries B}) Part B.}
+  \caption{{\bfseries Mathematical model accurately predicts dose-dependent changes in damping rate.}
+({\bfseries A}) Example single-cell trajectories (top) and population-averaged trajectories (mean of $1,000$ cells, bottom) of cells under various treatments. Cells with the nominal parameter set (left, black) closely match the experimental damping rate for unperturbed cells. Cells with simulated KL001 action (red, center) are noisier at the single-cell level, and show faster damping at the population-level. Cells with simulated longdaysin action show slightly more accurate single-cell rhythms, with a corresponding dip in the population-level damping rate.
+({\bfseries B}) The model accurately predicts the general trend of period vs.\ damping rate for both KL001 and longdaysin perturbations. Experimental data points represent the mean of two replications at each concentration. Computational data points represent the mean of ten independent population simulations.}
 \label{fig:simulation}
 \end{figure}
 
 
+\subsection*{Genome-wide effects of siRNA knockdown on single-cell stochastic noise}
+
+Unlike with single-cell imaging of fibroblast rhythms, inferring stochastic noise from the desynchronization rate of population-level recordings can be applied to existing and future high-throughput circadian screens.
+We demonstrate the insights that can be gained from such an approach by analyzing the publicly available genome-wide siRNA screen from Zhang {\itshape et al.,} 2009 \cite{Zhang2009}.
+The results of fitting a damped sinusoid to each of the $111,743$ bioluminescence trajectories is shown in Figure~\ref{fig:fit_quality}, in which $86\%$ of fits had an $R^2 > 0.80$ and were kept for further analysis.
+Additionally, of the fits with a high $R^2$ value, only a small minority had a negative damping rate ($0.1\%$): lending further support to the assumption that intercellular synchronization is unlikely in cultured U2OS cells. 
+
 \begin{figure}[tbp]
   \begin{center}
-    \includegraphics[]{figures/pdfs/r2_vs_decay.pdf}
+    \includegraphics[]{figures/pdfs/r2_vs_damping.pdf}
   \end{center}
   \caption{{\bfseries Figure Title.}
 ({\bfseries A}) Part A.
