@@ -29,6 +29,7 @@
 
 % For supplemental figures
 \newcommand{\beginsupplement}{%
+        \clearpage
         \setcounter{table}{0}
         \renewcommand{\thetable}{S\arabic{table}}%
         \setcounter{figure}{0}
@@ -160,17 +161,20 @@ We analyzed the supplemental annotations and data for the $111,743$ wells ($s=2,
 Fits for which the $R^2 < 0.80$ were discarded.
 We rescaled amplitude values on a logarithmic basis, as these were more normally distributed.
 Plate to plate variation, as shown in Figure~\ref{fig:plate_variation}, was more severe than variation on a well-to-well basis, Figure~\ref{fig:well_variation}.
-Parameters were therefore normalized on a plate-by-plate basis using a robust z-score, median $\pm$ median absolute deviation \cite{Birmingham2009}. 
+Parameters were therefore normalized on a plate-by-plate basis using a robust z-score \cite{Birmingham2009}:
+\[
+  z_{R,i} = \frac{x_i - M(x_i)}{M\left(\left|x_i - M(x_i)\right|\right)}, \qquad i \in \{0, \dots, {\cal P} - 1 \}
+\]
+where $M(\cdot)$ denotes the median of a vector, and $x_i$ contains all the points in one plate, and $\cal P$ is the number of plates.
+We removed outlier points prior to calculating the moments of the distributions, Pearson correlation coefficients, and performing the multivariable linear regression.
+Outliers were defined as points which contained any z-metric with an absolute value greater than eight.
 We chose the ``control'' wells to be those which contained no siRNA, as these proved to be more numerous than those containing reference siRNA perturbations and were clustered similarly to the highest-density regions of the perturbed fits.
 
 \subsubsection*{Detecting outlier perturbations}
-To find which target genes confidently shifted the fitted parameters away from the control population, we performed a test similar to a two-sample t-test with equal variance.
-Because the control distribution ($n=11,253$) is much larger than that for any particular gene ID ($n \approx 4$), the outlier test is dependent almost entirely on the control distribution and the perturbed mean. 
 We found the average perturbed response by grouping the perturbed dataset by target gene ID (using pandas, \url{http://pandas.pydata.org/}).
-To extend the t-test to two dimensions, we used a one-class support vector machine (SVM) with a radial basis function kernel ($\nu = 0.1,\ \gamma = 0.2$).
-The one-class SVM, after training with the control dataset, draws a decision boundary around $90\%$ of the control points, flagging the remaining $10\% \ (n = 1124)$ as outliers.
-The decision boundary was then used to classify the averaged perturbed points, from which $43\% \ (n = 3139)$ were flagged as outliers.
-
+A Hotelling's $T^2$ test was used to determine whether the means of each gene knockdown was significantly different from the control population.
+A robust covariance estimator was used to find the location and covariance of the control distribution (using scikit-learn).
+Because the control distribution ($n=11,253$) is much larger than that for any particular gene ID ($n \approx 4$), we assume the combined covariance is equal to the covariance of the control sample alone.
 
 \section*{Results and Discussion}
 
@@ -243,32 +247,36 @@ As the model includes no cell to cell communication, this difference is manifest
 
 \subsection*{Genome-wide effects of siRNA knockdown on single-cell stochastic noise}
 
-Unlike with single-cell imaging of fibroblast rhythms, inferring stochastic noise from the desynchronization rate of population-level recordings can be applied to existing and future high-throughput circadian screens.
+Unlike from using single-cell imaging, inferring stochastic noise from the desynchronization rate of population-level recordings can be applied to existing and future high-throughput circadian screens.
 We demonstrate the insights that can be gained from such an approach by analyzing the publicly available genome-wide siRNA screen from Zhang {\itshape et al.,} 2009 \cite{Zhang2009}.
-The results of fitting a damped sinusoid to each of the $111,743$ bioluminescence trajectories is shown in Figure~\ref{fig:fit_quality}, in which $86\%$ of fits had an $R^2 > 0.80$ and were kept for further analysis.
+The results of fitting a damped sinusoid to each of the $111,743$ bioluminescence trajectories is shown in Figure~\ref{fig:fit_quality}, in which $86\%$ of fits had an $R^2 > 0.8$.
+Since sinusoidal parameters can only be confidently inferred for fits in which the $R^2$ was sufficiently high, wells were removed from further analysis if $R^2 < 0.8$.
 Additionally, of the fits with a high $R^2$ value, only a small minority had a negative damping rate ($0.1\%$): lending further support to the assumption that intercellular synchronization is unlikely in cultured U2OS cells. 
 
 \begin{figure}[tbp]
   \begin{center}
     \includegraphics[]{figures/pdfs/r2_vs_damping.pdf}
   \end{center}
-  \caption{{\bfseries Figure Title.}
-({\bfseries A}) Part A.
-({\bfseries B}) Part B.}
+  \caption{{\bfseries Fit quality vs.\ damping rate for the genome-wide siRNA screen.}
+({\bfseries A}) A plot of the $111,743$ individual fits shows that the majority of fits have a high $R^2$ value and positive damping rate. Only fits with $R^2 > 0.8$ were kept for further analysis.
+({\bfseries B}) Examples chosen randomly from each of the four quadrant regions in (A). Sinusoidal parameters for fits 1-2 can be more confidently inferred than those for fits 3-4.}
 \label{fig:fit_quality}
 \end{figure}
 
+We next checked variation of the parameters on a plate-to-plate and well-to-well basis.
+Well-to-well variation was relatively absent, aside from expected variation due to long- and short-period controls (Figure~\ref{fig:well_variation}).
+Fits were normalized to remove plate-to-plate variation (Figure~\ref{fig:plate_variation}) using a robust z-score \cite{Birmingham2009}.
+Additionally, we separated wells into a ``perturbed'' category and ``control'' category, depending on whether or not the well contained an siRNA perturbation.
+As we show in Figure~\ref{fig:fit_distributions}, all fitted parameters displayed normal-like distributions, in which the control distributions showed much tighter clustering around the most likely values.
+Quantifications of the mean, variance, skew, and kurtosis for each distribution are shown in Table~\ref{tab:fit_distributions}.
 
 \begin{figure}[tbp]
   \begin{center}
     \includegraphics[]{figures/pdfs/fitted_parameters.pdf}
   \end{center}
-  \caption{{\bfseries Figure Title.}
-({\bfseries A}) Part A.
-({\bfseries B}) Part B.}
+  \caption{{\bfseries Distributions in fitted parameters for the genome-wide siRNA screen.} Distributions in normalized parameter values closely resemble Gaussian distributions. For all parameters, the region of highest density is consistent between the control and perturbed populations, indicating many perturbations do not appreciably change clock dynamics. } 
 \label{fig:fit_distributions}
 \end{figure}
-
 
 \begin{table}
   \begin{center}
@@ -282,10 +290,15 @@ Additionally, of the fits with a high $R^2$ value, only a small minority had a n
       \bottomrule
     \end{tabular}
   \end{center}
-  \caption{{\bfseries Fitted Parameters}}
+  \caption{{\bfseries Moments of the fitted parameter distributions (Figure~\ref{fig:fit_distributions}) after normalization and outlier removal.} Parameters were normalized by subtracting the median and dividing by the median absolute deviation on a plate-by-plate basis. Control distributions were less skewed and more peaked then their perturbed counterparts.}
   \label{tab:fit_distributions}
 \end{table}
 
+\subsubsection*{Damping rate is independent of other sinusoidal parameters}
+
+Since an siRNA's effect on period length does not effectively predict its effect on amplitude or phase (and vice-versa), we hypothesized that stochastic noise would similarly be independently affected by siRNA perturbations.
+Low Pearson correlation coefficients between normalized parameter distributions defend this hypothesis, with the highest correlations among variables seen between amplitude and damping rate ($\rho = 0.285$, Table~\ref{tab:corr}).
+Additionally, a multivariate linear regression of damping rate as a function of period, amplitude, phase, and perturbation type (control or perturbed, a categorical variable) produced an $R^2$ value of only $0.169$ (Table~\ref{tab:ols_reg}).
 
 \begin{table}
   \begin{center}
@@ -299,25 +312,37 @@ Additionally, of the fits with a high $R^2$ value, only a small minority had a n
       \bottomrule
     \end{tabular}
   \end{center}
-  \caption{{\bfseries Correlation matrix}}
+  \caption{{\bfseries Correlation among normalized parameters of the high-throughput siRNA screen.} Pearson correlation coefficients are relatively low between fitted parameters, indicating that changes to damping rate (and thereby stochastic noise) are not explained by changes to period, amplitude, or phase.}
   \label{tab:corr}
 \end{table}
 
+
+\subsubsection*{The unperturbed clock may lie at the Pareto frontier of high amplitude and low noise}
+
+The ability of a population of oscillators to maintain robust oscillations is a function both of its initial amplitude as well as its damping rate.
+A robust oscillator is therefore one with high amplitude and low stochastic noise.
+Scatter plots of the control and perturbed distributions are shown in Figure~\ref{fig:outlier_dist}A-B, which indicate perturbations tend to shift the clock towards less robust regions of oscillations.
+In order to find perturbations which confidently change robustness, we grouped the siRNA perturbations by target gene and performed a two-sample Hotelling's $T^2$ test against the control population.
+The resulting significant gene perturbations ($75\%$ of all genes) are shown in Figure~\ref{fig:outlier_dist}C.
+Quantifying the distribution in outliers by quadrant, it is clear that only a small minority of perturbations, $3.3\%$, simultaneously increase amplitude and decrease stochastic noise.
+It therefore appears that the unperturbed clock optimizes some trade-off between oscillator amplitude and stochastic noise, such that it is not feasible to make oscillations more robust by knocking down one gene at a time.
 
 \begin{figure}[tbp]
   \begin{center}
     \includegraphics[]{figures/pdfs/outliers.pdf}
   \end{center}
-  \caption{{\bfseries Figure Title.}
-({\bfseries A}) Part A.
-({\bfseries B}) Part B.}
+  \caption{{\bfseries Effects of siRNA knockdowns on amplitude and damping rate.}
+  Clock robustness is a function of both amplitude and damping rate.
+  Distributions in amplitude and damping rate for control wells ({\bfseries A}) or perturbed wells ({\bfseries B}) indicate that perturbations tend to shift the clock towards regions of higher damping rate or lower amplitude. Green dots in each figure indicates the mean of the control population.
+({\bfseries C}) Averaged effect of siRNA knockdown after grouping the perturbed population by Gene ID. Only those genes which were significantly different from the control distribution are shown (Hotelling's $T^2$ test, $\alpha = 0.01$).
+({\bfseries D}) Radial histogram of the significant gene perturbations shown in (C). The area of each slice is proportional to the frequency of perturbations away from the mean in that direction. Very few gene knockdowns resulting in both higher amplitude and lower damping rate (red slices, lower right quadrant).
+}
 \label{fig:outlier_dist}
 \end{figure}
 
-
-
-
 \section*{Conclusion}
+
+
 
 \section*{Acknowledgments}
 This work was supported by the National Institutes of Health/National Institute of General Medical Sciences under award number 1R01GM096873-01 and by the Institute for Collaborative Biotechnologies through grant W911NF-09-0001 from the U.S.\ Army Research Office.
@@ -332,9 +357,7 @@ This work was supported by the National Institutes of Health/National Institute 
   \begin{center}
     \includegraphics[]{figures/pdfs/small_molecule_r2.pdf}
   \end{center}
-  \caption{{\bfseries Figure Title.}
-({\bfseries A}) Part A.
-({\bfseries B}) Part B.}
+  \caption{{\bfseries Fit quality for the dose-dependent small molecule screens.} The bioluminescence rhythms in both reporter systems were well-described by a damped sinusoid. As the molecules were toxic to the reporter cells at high concentrations, fit quality declined with increasing dosage. Only fits with $R^2 > 0.8$ were kept for further analysis.}
 \label{fig:small_molecule_r2}
 \end{figure}
 
@@ -342,9 +365,7 @@ This work was supported by the National Institutes of Health/National Institute 
   \begin{center}
     \includegraphics[]{figures/pdfs/volume_calibration.pdf}
   \end{center}
-  \caption{{\bfseries Figure Title.}
-({\bfseries A}) Part A.
-({\bfseries B}) Part B.}
+  \caption{{\bfseries Calibration curve for fitting the volume parameter to experimental data.} The model's volume parameter was linearly related to the population-averaged damping rate on a log-log scale. Error bars represent the standard error of the mean, calculated by $10$ independent replicates for each volume. Points shown in gray had an average $R^2 < 0.9$ and were excluded from the linear regression. Solid and dashed grey lines indicate the mean and $95\%$ confidence intervals of the linear regression, respectively.}
 \label{fig:vol_calibration}
 \end{figure}
 
@@ -352,9 +373,8 @@ This work was supported by the National Institutes of Health/National Institute 
   \begin{center}
     \includegraphics[]{figures/pdfs/zhang_plates.pdf}
   \end{center}
-  \caption{{\bfseries figure title.}
-({\bfseries a}) part a.
-({\bfseries b}) part b.}
+  \caption{{\bfseries Plate-to-plate variation of fitted parameters in the Zhang {\itshape et al.,} 2009 genome-wide siRNA screen.} Dots indicate the median of each plate, with lines extending from the $5^\text{th}$ to $95^\text{th}$ percentile.
+While parameter fits were largely consistent between plates, some plates had definitively different value ranges. In order to accurately compare perturbations and controls between plate experiments, we normalized fitted parameters on a plate-by-plate basis.}
 \label{fig:plate_variation}
 \end{figure}
 
@@ -362,9 +382,7 @@ This work was supported by the National Institutes of Health/National Institute 
   \begin{center}
     \includegraphics[]{figures/pdfs/zhang_wells.pdf}
   \end{center}
-  \caption{{\bfseries figure title.}
-({\bfseries a}) part a.
-({\bfseries b}) part b.}
+  \caption{{\bfseries Well-to-well variation in the Zhang {\itshape et al.,} 2009 genome-wide siRNA screen.} Similar to Figure~\ref{fig:plate_variation}, dots indicate the median value of each parameter in each well, with lines extending from the $5^\text{th}$ to $95^\text{th}$ percentile. Well position did not seem to affect the fitted values, particularly in the middle regions which contained the siRNA knockdown library. Wells on either end showed significant variation, but these are likely due to the spotting of long- and short-period controls in the same position on each plate.}
 \label{fig:well_variation}
 \end{figure}
 
@@ -380,18 +398,18 @@ This work was supported by the National Institutes of Health/National Institute 
 \textbf{No. Observations:} &       94053      & \textbf{  AIC:               } &$ 3.450e+05  $\\
 \textbf{Df Residuals:}     &       94048      & \textbf{  BIC:               } &$ 3.450e+05  $\\
 \bottomrule
-\end{tabular}
-\begin{tabular}{lccccc}
+\end{tabular}\\[5ex]
+\begin{tabular}{lccccc}\toprule
                    & \textbf{coef} & \textbf{std err} & \textbf{t} & \textbf{P$>$$|$t$|$} & \textbf{[95.0\% Conf. Int.]}  \\
 \midrule
-\textbf{const}     &     $-0.0370$ &       $0.014$    &   $-2.572$ &        $0.010$       &       $-0.065,  -0.009$      \\
+\textbf{intercept}     &     $-0.0370$ &       $0.014$    &   $-2.572$ &        $0.010$       &       $-0.065,  -0.009$      \\
 \textbf{amplitude} &     $ 0.2375$ &       $0.003$    &   $86.282$ &        $0.000$       &       $ 0.232,   0.243$      \\
 \textbf{period}    &     $-0.1521$ &       $0.003$    &   $56.798$ &        $0.000$       &       $-0.157,  -0.147$      \\
 \textbf{phase}     &     $-0.2354$ &       $0.003$    &   $85.598$ &        $0.000$       &       $-0.241,  -0.230$      \\
-\textbf{type}      &     $ 0.3197$ &       $0.015$    &   $20.664$ &        $0.000$       &       $ 0.289,   0.350$      \\
+\textbf{perturbation type}      &     $ 0.3197$ &       $0.015$    &   $20.664$ &        $0.000$       &       $ 0.289,   0.350$      \\
 \bottomrule
-\end{tabular}
-\begin{tabular}{lclc}
+\end{tabular}\\[5ex]
+\begin{tabular}{lclc}\toprule
 \textbf{Omnibus:}       &$9769.391$& \textbf{  Durbin-Watson:     } &$    1.876$ \\
 \textbf{Prob(Omnibus):} &$  0.000 $& \textbf{  Jarque-Bera (JB):  } &$18459.719$ \\
 \textbf{Skew:}          &$  0.697 $& \textbf{  Prob(JB):          } &$     0.00$ \\
@@ -399,7 +417,7 @@ This work was supported by the National Institutes of Health/National Institute 
 \bottomrule
 \end{tabular}
 \end{center} 
-\caption{OLS Regression Results}
+\caption{{\bfseries Multivariable linear regression results.} Fit statistics which demonstrate the effect of each other fitted parameter on damping rate. Of particular note is the perturbation type categorical variable, which demonstrates that the presence of siRNA perturbation increases damping rate on average. Higher amplitude is also correlated with higher damping rate. However, in total damping rate is poorly predicted by the other fitted variables $R^2 = 0.169$, indicating it describes an independent oscillatory feature.}
 \label{tab:ols_reg}
 \end{table}
 
