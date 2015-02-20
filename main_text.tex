@@ -57,7 +57,15 @@ Regulatory Network | Stochastic | Synchronization
 
 \pagebreak
 \begin{abstract}
-
+Stochastic noise at the cellular level has been shown to play a fundamental role in circadian oscillations, influencing how groups of cells entrain to external cues and perhaps serving as the mechanism by which cell-autonomous rhythms are generated.
+Despite this importance, few studies have investigated how clock perturbations affect stochastic noise - even as increasing numbers of high-throughput screens categorize how gene knockdowns or small molecules can change clock period and amplitude.
+This absence is likely due to the difficulty associated with measuring cell-autonomous stochastic noise directly, which requires the careful collection and processing of single-cell data.
+In this study, we show that since cultured circadian reporters lack significant intercellular coupling, the damping rate of population-level bioluminescence recordings can serve as an accurate measure of cell-autonomous stochastic noise which can be applied to future and existing high-throughput circadian screens.
+Using cell-autonomous fibroblast data, we first show directly that higher noise at the single-cell results in faster damping at the population level.
+Next, we show that the damping rate of cultured cells can be changed in a dose-dependent fashion by small molecule modulators, and confirm that such a change can be explained by single-cell noise using a mathematical model.
+We further demonstrate the insights that can be gained by applying such a method to a genome-wide siRNA screen, revealing that stochastic noise is altered independently from period, amplitude, and phase.
+Finally, we hypothesize that the unperturbed clock may be highly optimized for robust rhythms, as very few gene perturbations are capable of simultaneously increasing amplitude and lowering stochastic noise.
+Ultimately, this study demonstrates the importance of considering the effect of circadian perturbations on cell-autonomous noise, especially with regard to the development of small-molecule circadian therapeutics.
 \end{abstract}
 
 \section*{Introduction}
@@ -214,7 +222,7 @@ This change in damping rate is consistent across both reporter systems ({\itshap
 
 \begin{figure}[tbp]
   \begin{center}
-    \includegraphics[]{figures/pdfs/mainfig_dose.pdf}
+    \makebox[\textwidth][c]{\includegraphics[]{figures/pdfs/mainfig_dose.pdf}}
   \end{center}
   \caption{{\bfseries Small molecule modulator KL001 increases damping rate in a dose-dependent fashion.}
   Experimental data on the dose-dependent effect of small molecules KL001 and Longdaysin on cultured circadian reporter cells was taken from Hirota {\itshape et al.,} 2012 \cite{Hirota2012}.
@@ -236,7 +244,7 @@ As the model includes no cell to cell communication, this difference is manifest
 
 \begin{figure}[tbp]
   \begin{center}
-    \includegraphics[]{figures/pdfs/main_fig_simulations.pdf}
+    \makebox[\textwidth][c]{\includegraphics[]{figures/pdfs/main_fig_simulations.pdf}}
   \end{center}
   \caption{{\bfseries Mathematical model accurately predicts dose-dependent changes in damping rate.}
 ({\bfseries A}) Example single-cell trajectories (top) and population-averaged trajectories (mean of $1,000$ cells, bottom) of cells under various treatments. Cells with the nominal parameter set (left, black) closely match the experimental damping rate for unperturbed cells. Cells with simulated KL001 action (red, center) are noisier at the single-cell level, and show faster damping at the population-level. Cells with simulated longdaysin action show slightly more accurate single-cell rhythms, with a corresponding dip in the population-level damping rate.
@@ -341,6 +349,13 @@ It therefore appears that the unperturbed clock optimizes some trade-off between
 \end{figure}
 
 \section*{Conclusion}
+
+In this study, we have described a method by which stochastic noise can be estimated from population-level bioluminescence recordings.
+As high amplitude circadian oscillations are important for maintaining metabolic health, many studies have sought to find small molecule candidates which increase oscillatory amplitude \cite{Chen2013}.
+In the search for circadian clock therapeutics, high-throughput methods are frequently used to screen for such drugs, often neglecting potential effects on cell-autonomous noise.
+While we have demonstrated a method by which the effects of small molecules on noise can be inferred from high-throughput methods, we have also shown that the potential improvement of clock robustness may be limited.
+Amplitudes of circadian rhythms may be best bolstered by small molecule therapies by finding drugs which act transiently to synchronize peripheral oscillators.
+While such a method would require accurate alignment of drug administration to the correct circadian phase, a recent {\itshape in silico} study has demonstrated the potential effectiveness of such an approach in improving amplitudes in peripheral tissues \cite{St.John2014a}.
 
 
 
