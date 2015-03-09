@@ -204,6 +204,11 @@ A Hotelling's $T^2$ test was used to determine whether the means of each gene kn
 A robust covariance estimator was used to find the location and covariance of the control distribution (using scikit-learn).
 Because the control distribution ($n=11,253$) is much larger than that for any particular gene ID ($n \approx 4$), we assume the pooled covariance can be approximated by the covariance of the control sample alone.
 
+\subsection*{Software}
+All computations were performed using Python.
+Codes used to produced the figures in this manuscript can be found at \url{https://github.com/pstjohn/decay-methods}.
+
+
 \section*{Results and Discussion}
 
 \subsection*{Higher noise results in faster damping in population-level rhythms}
@@ -390,7 +395,7 @@ We thank Tsuyoshi Hirota, Eric Zhang, David Welsh, and John Abel for the helpful
 This work was supported by the National Institutes of Health/National Institute of General Medical Sciences under award number 1R01GM096873-01 and by the Institute for Collaborative Biotechnologies through grant W911NF-09-0001 from the U.S.\ Army Research Office.
 
 
-\bibliographystyle{msb}
+\bibliographystyle{plos2015}
 \bibliography{condensed_library.bib}
 
 \beginsupplement
