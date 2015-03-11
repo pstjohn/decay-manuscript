@@ -28,6 +28,12 @@
 \usepackage{units}
 \usepackage{booktabs}
 
+% Make subsections more clear
+\usepackage{titlesec}
+
+\titleformat{\subsubsection}
+  {\normalfont\itshape}{\thesubsubsection}{1em}{}
+
 % For supplemental figures
 \newcommand{\beginsupplement}{%
         \clearpage
@@ -58,7 +64,7 @@ Regulatory Network | Stochastic | Synchronization
 
 \pagebreak
 \begin{abstract}
-Stochastic noise at the cellular level has been shown to play a fundamental role in circadian oscillations, influencing how groups of cells entrain to external cues and perhaps serving as the mechanism by which cell-autonomous rhythms are generated.
+Stochastic noise at the cellular level has been shown to play a fundamental role in circadian oscillations, influencing how groups of cells entrain to external cues and likely serving as the mechanism by which cell-autonomous rhythms are generated.
 Despite this importance, few studies have investigated how clock perturbations affect stochastic noise - even as increasing numbers of high-throughput screens categorize how gene knockdowns or small molecules can change clock period and amplitude.
 This absence is likely due to the difficulty associated with measuring cell-autonomous stochastic noise directly, which requires the careful collection and processing of single-cell data.
 % since cultured circadian reporters lack significant intercellular coupling,
@@ -67,7 +73,7 @@ Using cell-autonomous fibroblast data, we first show directly that higher noise 
 Next, we show that the damping rate of cultured cells can be changed in a dose-dependent fashion by small molecule modulators, and confirm that such a change can be explained by single-cell noise using a mathematical model.
 We further demonstrate the insights that can be gained by applying such a method to a genome-wide siRNA screen, revealing that stochastic noise is altered independently from period, amplitude, and phase.
 Finally, we hypothesize that the unperturbed clock may be highly optimized for robust rhythms, as very few gene perturbations are capable of simultaneously increasing amplitude and lowering stochastic noise.
-Ultimately, this study demonstrates the importance of considering the effect of circadian perturbations on cell-autonomous noise, especially with regard to the development of small-molecule circadian therapeutics.
+Ultimately, this study demonstrates the importance of considering the effect of circadian perturbations on cell-autonomous noise, particularly with regard to the development of small-molecule circadian therapeutics.
 \end{abstract}
 
 \section*{Introduction}
@@ -117,9 +123,9 @@ Our results should prove especially important in the future search for small mol
 \section*{Materials and Methods}
 
 \subsection*{Fitting a damped sinusoid to experimental data}
-Raw experimental data $x_i(t_i), \  i \in \{0, \dots, N-1\}$ are first detrended using Hodrick-Prescott filter with a smoothing parameter $\gamma = 0.05\left(\nicefrac{24 \text{ hrs}}{s}\right)^4$, in which $s$ is the sampling rate (in hours) \cite{Ravn2002}.
+Raw experimental data $x(t_i), \  i \in \{0, \dots, N-1\}$ are first detrended using Hodrick-Prescott filter with a smoothing parameter $\gamma = 0.05\left(\nicefrac{24 \text{ hrs}}{T_s}\right)^4$, in which $T_s$ is the sampling rate (in hours) \cite{Ravn2002}.
 The detrended data are then filtered using a low-pass filter to remove high-frequency noise (forward-backward Butterworth filter with $n = 5,\ w_c = 0.1$).
-We denote the detrended and filtered experimental data by $y_i(t_i)$.
+We denote the detrended and filtered experimental data by $y(t_i)$.
 A damped sinusoid, specified by:
 \[
   \hat{y}(t) = A e^{-d t} \sin\left(\frac{2\pi t}{T} + \theta\right)
@@ -129,8 +135,9 @@ For numerical efficiency, the period, $T$, and damping rate, $d$, parameters are
 Amplitude, $A$, and phase, $\theta$, parameters are subsequently fit using a linear least-squares regression.
 Overall $R^2$ values for the regression were calculated from the residual error between the detrended data and fitted sinusoid:
 \[
-  R^2 = 1 - \frac{\sum_{i = 0}^{N-1} (y_i(t_i) - \hat{y}(t_i))^2}{\sum_{i = 0}^{N-1} (y_i(t_i) - \bar{y}(t_i))^2}
+  R^2 = 1 - \frac{\sum_{i = 0}^{N-1} (y(t_i) - \hat{y}(t_i))^2}{\sum_{i = 0}^{N-1} (y(t_i) - \bar{y}(t_i))^2}
 \]
+in which $\bar{y}(t_i)$ represents the mean of the detrended data.
 
 
 \subsection*{Processing single-cell bioluminescence data}
@@ -225,7 +232,7 @@ The significance of this difference was confirmed via a bootstrap analysis (Figu
 
 \begin{figure}[tbp]
   \begin{center}
-    \includegraphics[]{figures/pdfs/noise_ts_and_boot.pdf}
+    \includegraphics[width=0.8\textwidth]{figures/pdfs/noise_ts_and_boot.pdf}
   \end{center}
   \caption{{\bfseries Single-cell bioluminescence recordings show that higher stochastic noise results in faster damping at the population-level.}
   Data on the bioluminescence of single-cell fibroblasts was taken from Leise {\itshape et al.,} 2012 \cite{Leise2012}.
@@ -258,7 +265,7 @@ This change in damping rate is consistent across both reporter systems ({\itshap
 
 % \subsection*{Mathematical model predicts KL001 damping rate increase comes from increased single-cell stochastic noise}
 
-To lend further support to the conclusion that the dose-dependent changes in damping rate from KL001 is due to changes in single-cell noise characteristics, we employed a model of circadian rhythms previously used to explain the effects of both small molecule perturbations (Tables~\ref{tab:model}-\ref{tab:parset}) \cite{St.John2014}.
+To lend further support to the conclusion that the dose-dependent changes in damping rate from KL001 is due to changes in single-cell noise characteristics, we employed a model of circadian rhythms previously used to explain the effects of both small molecule perturbations \cite{St.John2014}, summarized in Tables \ref{tab:model}-\ref{tab:parset}.
 In order to capture changes to noise characteristics, we first converted the model to a stochastic biochemical system.
 Population-level rhythms were generated by averaging the trajectories of $1,000$ individual, noninteracting oscillators.
 The only free parameter in converting the existing deterministic model to a stochastic one is the cell volume, which was determined by fitting the observed population-level damping rate to that of the experimental control traces (Figure~\ref{fig:vol_calibration}).
@@ -301,11 +308,11 @@ Well-to-well variation was relatively absent, aside from expected variation due 
 Fits were normalized to remove plate-to-plate variation (Figure~\ref{fig:plate_variation}) using a robust z-score \cite{Birmingham2009}.
 Additionally, we separated wells into a ``perturbed'' category and ``control'' category, depending on whether or not the well contained an siRNA perturbation.
 As we show in Figure~\ref{fig:fit_distributions}, all fitted parameters displayed normal-like distributions, in which the control distributions showed much tighter clustering around the most likely values.
-Quantifications of the mean, variance, skew, and kurtosis for each distribution are shown in Table~\ref{tab:fit_distributions}.
+Quantifications of the mean, variance, skewness, and kurtosis for each distribution are shown in Table~\ref{tab:fit_distributions}.
 
 \begin{figure}[tbp]
   \begin{center}
-    \includegraphics[]{figures/pdfs/fitted_parameters.pdf}
+    \includegraphics[width=0.8\textwidth]{figures/pdfs/fitted_parameters.pdf}
   \end{center}
   \caption{{\bfseries Distributions in fitted parameters for the genome-wide siRNA screen.} Distributions in robust z-scores closely resemble normal distributions. For all parameters, the region of highest density is consistent between the control and perturbed populations, indicating many perturbations do not appreciably change clock dynamics. } 
 \label{fig:fit_distributions}
@@ -316,10 +323,10 @@ Quantifications of the mean, variance, skew, and kurtosis for each distribution 
     \begin{tabular}{lrrrrrr}\toprule
       {} & \multicolumn{2}{c}{$T$} & \multicolumn{2}{c}{$\ln A$} & \multicolumn{2}{c}{$d$} \\
       {}         & \multicolumn{1}{c}{C}         & \multicolumn{1}{c}{P}           & \multicolumn{1}{c}{C}         & \multicolumn{1}{c}{P}               & \multicolumn{1}{c}{C}         & \multicolumn{1}{c}{P}           \\\midrule
-      $\mu$      & $-0.234$  & $0.187$  &  $0.443$  & $-0.343$  &  $0.043$  & $0.090$    \\
-      $\sigma$   & $ 0.774$  & $1.820$  &  $0.778$  & $ 1.753$  &  $0.878$  & $1.688$    \\
-      Skew & $ 0.153$  & $0.367$  & -$1.823$  & $-0.580$  & -$0.107$  & $0.371$    \\
-      Kurt & $ 3.772$  & $0.591$  &  $8.329$  & $ 0.476$  &  $2.423$  & $0.373$    \\
+      Mean     & $-0.234$ & $0.187$ & $0.443$  & $-0.343$ & $0.043$  & $0.090$    \\
+      Variance & $ 0.599$ & $3.313$ & $0.605$  & $ 3.074$ & $0.771$  & $2.850$    \\
+      Skewness & $ 0.153$ & $0.367$ & $-1.823$ & $-0.580$ & $-0.107$ & $0.371$    \\
+      Kurtosis & $ 3.772$ & $0.591$ & $8.329$  & $ 0.476$ & $2.423$  & $0.373$    \\
       \bottomrule
     \end{tabular}
   \end{center}
@@ -350,7 +357,7 @@ Additionally, a multivariate linear regression of damping rate as a function of 
 \end{table}
 
 
-\subsubsection*{The unperturbed clock may lie at the Pareto frontier of high amplitude and low noise}
+\subsubsection*{The unperturbed clock lies at the Pareto frontier of high amplitude and low noise}
 
 The ability of a population of oscillators to maintain robust oscillations is a function both of its initial amplitude as well as its damping rate.
 A robust oscillator is therefore one with high amplitude and low stochastic noise.
@@ -362,7 +369,7 @@ It therefore appears that the unperturbed clock optimizes some trade-off between
 
 \begin{figure}[tbp]
   \begin{center}
-    \includegraphics[]{figures/pdfs/outliers.pdf}
+    \includegraphics[width=0.65\textwidth]{figures/pdfs/outliers.pdf}
   \end{center}
   \caption{{\bfseries Effects of siRNA knockdowns on amplitude and damping rate.}
   Clock robustness is a function of both amplitude and damping rate.
@@ -402,7 +409,7 @@ This work was supported by the National Institutes of Health/National Institute 
 
 \begin{figure}[tbp]
   \begin{center}
-    \includegraphics[]{figures/pdfs/small_molecule_r2.pdf}
+    \includegraphics[width=0.5\textwidth]{figures/pdfs/small_molecule_r2.pdf}
   \end{center}
   \caption{{\bfseries Fit quality for the dose-dependent small molecule screens.} The bioluminescence rhythms in both reporter systems were well-described by a damped sinusoid. As the molecules were toxic to the reporter cells at high concentrations, fit quality declined with increasing dosage. Only fits with $R^2 > 0.8$ were kept for further analysis.}
 \label{fig:small_molecule_r2}
@@ -410,7 +417,7 @@ This work was supported by the National Institutes of Health/National Institute 
 
 \begin{figure}[tbp]
   \begin{center}
-    \includegraphics[]{figures/pdfs/volume_calibration.pdf}
+    \includegraphics[width=0.5\textwidth]{figures/pdfs/volume_calibration.pdf}
   \end{center}
   \caption{{\bfseries Calibration curve for fitting the volume parameter to experimental data.} The model's volume parameter was linearly related to the population-averaged damping rate on a log-log scale. Error bars represent the standard error of the mean, calculated by $10$ independent replicates for each volume. Points shown in gray had an average $R^2 < 0.9$ and were excluded from the linear regression. Solid and dashed grey lines indicate the mean and $95\%$ confidence intervals of the linear regression, respectively.}
 \label{fig:vol_calibration}
@@ -418,7 +425,7 @@ This work was supported by the National Institutes of Health/National Institute 
 
 \begin{figure}[tbp]
   \begin{center}
-    \includegraphics[]{figures/pdfs/zhang_plates.pdf}
+    \includegraphics[width=0.8\textwidth]{figures/pdfs/zhang_plates.pdf}
   \end{center}
   \caption{{\bfseries Plate-to-plate variation of fitted parameters in the Zhang {\itshape et al.,} 2009 genome-wide siRNA screen.} Dots indicate the median of each plate, with lines extending from the $5^\text{th}$ to $95^\text{th}$ percentile. While parameter fits were of similar magnitude for all plates, some inconsistencies were present. In order to accurately compare perturbations and controls between plate experiments, we normalized fitted parameters on a plate-by-plate basis.}
 \label{fig:plate_variation}
@@ -426,7 +433,7 @@ This work was supported by the National Institutes of Health/National Institute 
 
 \begin{figure}[tbp]
   \begin{center}
-    \includegraphics[]{figures/pdfs/zhang_wells.pdf}
+    \includegraphics[width=0.8\textwidth]{figures/pdfs/zhang_wells.pdf}
   \end{center}
   \caption{{\bfseries Well-to-well variation in the Zhang {\itshape et al.,} 2009 genome-wide siRNA screen.} Similar to Figure~\ref{fig:plate_variation}, dots indicate the median value of each parameter in each well, with lines extending from the $5^\text{th}$ to $95^\text{th}$ percentile. Well position did not seem to affect the fitted values, particularly in the middle regions which contained the siRNA knockdown library. Wells on either end showed significant variation, but these are likely due to the spotting of long- and short-period controls in the same position on each plate.}
 \label{fig:well_variation}
