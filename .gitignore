@@ -4,6 +4,8 @@
 methods.tar.gz
 main_text.pdf
 
+*.docx
+
 # vim temp files
 *.sw[op]
 
