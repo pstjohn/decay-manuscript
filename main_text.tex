@@ -130,103 +130,8 @@ Using this additional information, we show that circadian rhythms have likely ev
 Our results should prove especially important in the future search for small molecule circadian therapeutics, as it allows the effect of candidate drugs on single-cell noise to be quantified in a high-throughput manner.
 
 
-\section*{Materials and Methods}
 
-\subsection*{Fitting a damped sinusoid to experimental data}
-Raw experimental data $x(t_i), \  i \in \{0, \dots, N-1\}$ are first detrended using Hodrick-Prescott filter with a smoothing parameter $\gamma = 0.05\left(\nicefrac{24 \text{ hrs}}{T_s}\right)^4$, in which $T_s$ is the sampling rate (in hours) \cite{Ravn2002}.
-The detrended data are then filtered using a low-pass filter to remove high-frequency noise (forward-backward Butterworth filter with $n = 5,\ w_c = 0.1$).
-We denote the detrended and filtered experimental data by $y(t_i)$.
-A damped sinusoid, specified by:
-\[
-  \hat{y}(t) = A e^{-d t} \sin\left(\frac{2\pi t}{T} + \theta\right)
-\]
-is then fit to the filtered data.
-For numerical efficiency, the period, $T$, and damping rate, $d$, parameters are fit first using a matrix pencil method \cite{Hua1990}, reviewed in \cite{Zielinski2011}.
-Amplitude, $A$, and phase, $\theta$, parameters are subsequently fit using a linear least-squares regression.
-Overall $R^2$ values for the regression were calculated from the residual error between the detrended data and fitted sinusoid:
-\[
-  R^2 = 1 - \frac{\sum_{i = 0}^{N-1} (y(t_i) - \hat{y}(t_i))^2}{\sum_{i = 0}^{N-1} (y(t_i) - \bar{y}(t_i))^2}
-\]
-in which $\bar{y}(t_i)$ represents the mean of the detrended data.
-
-
-\subsection*{Processing single-cell bioluminescence data}
-
-Single-cell bioluminescence data for 79 cells was obtained from Leise {\itshape et al.,} 2012 \cite{Leise2012}.
-As was done in the original study, a discrete wavelet transform (using PyWavelets, \url{http://www.pybytes.com/pywavelets}) was performed to detrend and remove noise.
-
-\subsubsection*{Sorting cells by noise level}
-As in the original study, various parameters describing the average noise level of each cell were collected.
-Traces were denoised and detrended by keeping only the $(8 \text{hr}, 258 \text{hr})$ wavelet components.
-From these smoothed trajectories, a Hilbert transform was used estimate points at which the phase crossed $0$ to find period and amplitude coefficients of variation.
-An additional noise parameter, the standard deviation in the $(1 \text{hr}, 8 \text{hr})$ wavelet components divided by the overall rhythm amplitude, was used to quantify the high-frequency noise of the system.
-From these three noise variables, a combined noise metric was constructed by projecting the variables along their first principle component (using scikit-learn, \url{http://scikit-learn.org/}).
-Cells were ranked according to this combined noise metric, and a high-noise group and low-noise group were constructed by taking the 39 highest-noise and lowest-noise cells, respectively.
-The raw bioluminescence profiles were not initially synchronized, so the traces were offset to have the same starting phase in order to simulate the gradual desynchronization of a group of oscillators. 
-This was accomplished by starting each trace at the first phase zero-crossing, found using a Hilbert transform.
-
-\subsubsection*{Bootstrap estimations of the damping rate difference}
-Averaged traces for low and high-noise group displayed a damped sinusoidal rhythm.
-The first 4 days of rhythms ($T_s = 0.5,\ N = 192$) were fit using a damped sinusoid.
-To ensure the difference in damping rate between groups was statistically significant, a bootstrap analysis was performed.
-In each of $10,000$ bootstrap trials, cells were randomly assigned evenly to either the low-noise or the high-noise group (one cell was randomly omitted in each trial to ensure even group sizes).
-The absolute difference in damping rate between the two populations was recorded to yield a two-tailed test.
-The observed test statistic, $|d_h - d_l| = 6.65\times10^{-3}$, was found to be significant at the $\alpha = 0.05$ confidence threshold ($p = 0.0264$).
-
-\subsection*{Quantifying dose-dependent effects of small molecule modulators}
-Bioluminescence traces ($T_s = 1.67,\ N=71$) with increasing small molecule concentrations were fit with a damped sinusoid using the method described in a previous section.
-Because the small molecules were toxic at very high concentrations, experiments were removed from further analysis where $R^2 < 0.80$ (Figure~\ref{fig:small_molecule_r2}).
-
-\subsection*{{In silico} prediction of small molecule experiments}
-A previously published mathematical model of circadian rhythms \cite{Hirota2012} was used to predict the effects on population damping rate from the dose-dependent small molecule experiments.
-The parameters used to capture the effects of each small molecule were the same as described previously \cite{St.John2014}.
-The model was converted to a stochastic biochemical system and subsequently simulated using StochKit2 \cite{Sanft2011a} (via GillesPy, \url{https://github.com/JohnAbel/gillespy}).
-Population-level rhythms were found by taking the average of $1,000$ noninteracting oscillators, starting at identical initial conditions.
-The only parameter left unspecified by the deterministic model was the cell volume, $\Omega$, which controlled the amount of noise in the system.
-For each $\Omega$, a damped sinusoid was fit to the population-averaged state trajectory. 
-An $R^2$ value was calculated for each fit, taking into account all eight state variables.
-
-\subsubsection*{Fitting the volume parameter}
-We calculated an average experimental damping rate of $d = 0.0151$ from the $0 \mu M$ bioluminescence trajectories for both KL001 and longdaysin.
-{\itshape In silico} damping rates were calculated for logarithmically spaced values of $\Omega \in (100, 500)$.
-Ten independent groups of $1,000$ oscillators were simulated for each $\Omega$, from which the means and standard errors were found.
-Simulations in which $R^2 < 0.90$ were removed from further analysis.
-A weighted least-squares regression (using statsmodels, \url{http://statsmodels.sourceforge.net/}) was performed for $\log d$ vs.\ $\log \Omega$, using the $\log \text{SEM}$ of each measurement as a regression weight (Figure~\ref{fig:vol_calibration}).
-The best fit was found to be $\Omega = 226.3 \pm 9.0$, and was used for subsequent model simulations.
-
-\subsubsection*{Parameter knockdown experiments}
-We replicated the effects of the small molecules KL001 and longdaysin mathematically through the reductions of the $vdcn$ and $vac1p$ parameters, respectively (Tables~\ref{tab:model}-\ref{tab:parset}).
-Knockdown simulations were performed with $20$ values of each parameter, linearly spaced between $100\%$ and $15\%$ of their nominal value.
-Similar to the volume calibration simulations, $10$ independent populations of $1,000$ oscillators were simulated from an initially entrained state.
-Means and standard errors in period and damping rate were calculated from each population-averaged trajectory.
-Simulations in which $R^2 < 0.90$ were removed from further analysis.
-
-\subsection*{Fitting the genome-wide siRNA screen}
-We analyzed the data and annotations for the $111,743$ wells ($T_s = 2,\ N = 72$) in the Zhang {\itshape et al.,} 2009 screen \cite{Zhang2009}.
-Fits for which the $R^2 < 0.80$ were discarded.
-The natural logarithm of the amplitude was used, since it more closely resembled a normal distribution and was on a similar scale to the damping rate.
-Plate to plate variation, as shown in Figure~\ref{fig:plate_variation}, was more severe than variation on a well-to-well basis, Figure~\ref{fig:well_variation}.
-Parameters were therefore normalized on a plate-by-plate basis using a robust z-score \cite{Birmingham2009}:
-\[
-  z_{R,i} = \frac{p_i - M(p_i)}{M\left(\left|p_i - M(p_i)\right|\right)}, \qquad i \in \{0, \dots, {\cal P} - 1 \}
-\]
-where $M(\cdot)$ denotes the median of a vector, and $p_i$ contains all the points in one plate, and $\cal P$ is the number of plates.
-We removed outlier points prior to calculating the moments of the distributions, Pearson correlation coefficients, and performing the multivariable linear regression.
-Outliers were defined as points which contained a z-metric (in either period, phase, amplitude, or damping rate) with an absolute value greater than eight.
-We chose the ``control'' wells to be those which contained no siRNA, as these proved to be more numerous than those containing reference siRNA perturbations and were clustered similarly to the highest-density regions of the perturbed fits.
-
-\subsubsection*{Detecting outlier perturbations}
-We found the average response to each gene perturbation by grouping the perturbed dataset by target gene ID (using pandas, \url{http://pandas.pydata.org/}).
-A Hotelling's $T^2$ test was used to determine whether the means of each gene knockdown was significantly different from the control population.
-A robust covariance estimator was used to find the location and covariance of the control distribution (using scikit-learn).
-Because the control distribution ($n=11,253$) is much larger than that for any particular gene ID ($n \approx 4$), the effect of the perturbed sample on the pooled covariance was neglected.
-
-\subsection*{Software}
-All computations were performed using Python.
-Code used to perform the analysis and produce the figures in this manuscript can be found online at \url{https://github.com/pstjohn/decay-methods}.
-
-
-\section*{Results and Discussion}
+\section*{Results}
 
 \subsection*{Higher noise results in faster damping in population-level rhythms}
 
@@ -259,7 +164,7 @@ The significance of this difference was confirmed via a bootstrap analysis (Figu
 
 We next demonstrate that perturbations to the transcriptional oscillator are capable of altering single-cell level stochastic noise.
 The actions of small-molecule circadian modulators KL001 and longdaysin are well-characterized, and are known to affect circadian period and amplitude in a dose-dependent fashion \cite{St.John2014}.
-By fitting experimental data on the population-level responses to increasing dosages of each molecule with a damped sinusoid, we show that KL001, but not longdaysin, increases damping rate in a dose-dependent fashion (Figure~\ref{fig:dose_dependence}).
+By fitting experimental data on the population-level responses to increasing dosages of each molecule with a damped sinusoid, we show that KL001, but not longdaysin, increases damping rate in a dose-dependent fashion (Figure~\ref{fig:dose_dependence},~\ref{fig:small_molecule_r2}).
 This change in damping rate is consistent across both reporter systems ({\itshape Bmal1-dLuc} and {\itshape Per2-dLuc} U2OS cells), indicating it is a fundamental property of the overall gene regulatory network.
 
 \begin{figure}[tbp]
@@ -405,7 +310,7 @@ This type of anomalous diffusion results in a different damping profile, as high
 Since the data used in this study is well-described by an exponentially damped sinusoid, and since a mathematical model assuming homogeneous mean periods accurately predicts the experimental damping rate changes, this assumption is likely justified.
 Additionally, since this study is mainly concerned with changes in the damping rate (rather than the absolute damping rate), it is unlikely that period heterogeneity plays a major role.
 
-\section*{Conclusion}
+\section*{Discussion}
 
 % Our method assumes independent and sustained oscillators at the single-cell level.
 % While these assumptions have not always been upheld in the circadian literature \cite{Izumo2003}, more recent studies have demonstrated the validity of these assumptions in cultured fibroblast cells.
@@ -421,6 +326,101 @@ Amplitudes of circadian rhythms may therefore be best increased by small molecul
 While such a method would require accurate alignment of drug administration to the correct circadian phase, a recent {\itshape in silico} study has demonstrated the potential effectiveness of such an approach in improving amplitudes in peripheral tissues \cite{St.John2014a}.
 Finally, the ability to extract an additional biologically relevant parameter from existing datasets will likely prove useful for many studies, as it allows further differentiation between perturbations which might otherwise have identical effects on bioluminescence rhythms.
 
+
+\section*{Materials and Methods}
+
+\subsection*{Fitting a damped sinusoid to experimental data}
+Raw experimental data $x(t_i), \  i \in \{0, \dots, N-1\}$ are first detrended using Hodrick-Prescott filter with a smoothing parameter $\gamma = 0.05\left(\nicefrac{24 \text{ hrs}}{T_s}\right)^4$, in which $T_s$ is the sampling rate (in hours) \cite{Ravn2002}.
+The detrended data are then filtered using a low-pass filter to remove high-frequency noise (forward-backward Butterworth filter with $n = 5,\ w_c = 0.1$).
+We denote the detrended and filtered experimental data by $y(t_i)$.
+A damped sinusoid, specified by:
+\[
+  \hat{y}(t) = A e^{-d t} \sin\left(\frac{2\pi t}{T} + \theta\right)
+\]
+is then fit to the filtered data.
+For numerical efficiency, the period, $T$, and damping rate, $d$, parameters are fit first using a matrix pencil method \cite{Hua1990}, reviewed in \cite{Zielinski2011}.
+Amplitude, $A$, and phase, $\theta$, parameters are subsequently fit using a linear least-squares regression.
+Overall $R^2$ values for the regression were calculated from the residual error between the detrended data and fitted sinusoid:
+\[
+  R^2 = 1 - \frac{\sum_{i = 0}^{N-1} (y(t_i) - \hat{y}(t_i))^2}{\sum_{i = 0}^{N-1} (y(t_i) - \bar{y}(t_i))^2}
+\]
+in which $\bar{y}(t_i)$ represents the mean of the detrended data.
+
+
+\subsection*{Processing single-cell bioluminescence data}
+
+Single-cell bioluminescence data for 79 cells was obtained from Leise {\itshape et al.,} 2012 \cite{Leise2012}.
+As was done in the original study, a discrete wavelet transform (using PyWavelets, \url{http://www.pybytes.com/pywavelets}) was performed to detrend and remove noise.
+
+\subsubsection*{Sorting cells by noise level}
+As in the original study, various parameters describing the average noise level of each cell were collected.
+Traces were denoised and detrended by keeping only the $(8 \text{hr}, 258 \text{hr})$ wavelet components.
+From these smoothed trajectories, a Hilbert transform was used estimate points at which the phase crossed $0$ to find period and amplitude coefficients of variation.
+An additional noise parameter, the standard deviation in the $(1 \text{hr}, 8 \text{hr})$ wavelet components divided by the overall rhythm amplitude, was used to quantify the high-frequency noise of the system.
+From these three noise variables, a combined noise metric was constructed by projecting the variables along their first principle component (using scikit-learn, \url{http://scikit-learn.org/}).
+Cells were ranked according to this combined noise metric, and a high-noise group and low-noise group were constructed by taking the 39 highest-noise and lowest-noise cells, respectively.
+The raw bioluminescence profiles were not initially synchronized, so the traces were offset to have the same starting phase in order to simulate the gradual desynchronization of a group of oscillators. 
+This was accomplished by starting each trace at the first phase zero-crossing, found using a Hilbert transform.
+
+\subsubsection*{Bootstrap estimations of the damping rate difference}
+Averaged traces for low and high-noise group displayed a damped sinusoidal rhythm.
+The first 4 days of rhythms ($T_s = 0.5,\ N = 192$) were fit using a damped sinusoid.
+To ensure the difference in damping rate between groups was statistically significant, a bootstrap analysis was performed.
+In each of $10,000$ bootstrap trials, cells were randomly assigned evenly to either the low-noise or the high-noise group (one cell was randomly omitted in each trial to ensure even group sizes).
+The absolute difference in damping rate between the two populations was recorded to yield a two-tailed test.
+The observed test statistic, $|d_h - d_l| = 6.65\times10^{-3}$, was found to be significant at the $\alpha = 0.05$ confidence threshold ($p = 0.0264$).
+
+\subsection*{Quantifying dose-dependent effects of small molecule modulators}
+Bioluminescence traces ($T_s = 1.67,\ N=71$) with increasing small molecule concentrations were fit with a damped sinusoid using the method described in a previous section.
+Because the small molecules were toxic at very high concentrations, experiments were removed from further analysis where $R^2 < 0.80$ (Figure~\ref{fig:small_molecule_r2}).
+
+\subsection*{{In silico} prediction of small molecule experiments}
+A previously published mathematical model of circadian rhythms \cite{Hirota2012} was used to predict the effects on population damping rate from the dose-dependent small molecule experiments.
+The parameters used to capture the effects of each small molecule were the same as described previously \cite{St.John2014}.
+The model was converted to a stochastic biochemical system and subsequently simulated using StochKit2 \cite{Sanft2011a} (via GillesPy, \url{https://github.com/JohnAbel/gillespy}).
+Population-level rhythms were found by taking the average of $1,000$ noninteracting oscillators, starting at identical initial conditions.
+The only parameter left unspecified by the deterministic model was the cell volume, $\Omega$, which controlled the amount of noise in the system.
+For each $\Omega$, a damped sinusoid was fit to the population-averaged state trajectory. 
+An $R^2$ value was calculated for each fit, taking into account all eight state variables.
+
+\subsubsection*{Fitting the volume parameter}
+We calculated an average experimental damping rate of $d = 0.0151$ from the $0 \mu M$ bioluminescence trajectories for both KL001 and longdaysin.
+{\itshape In silico} damping rates were calculated for logarithmically spaced values of $\Omega \in (100, 500)$.
+Ten independent groups of $1,000$ oscillators were simulated for each $\Omega$, from which the means and standard errors were found.
+Simulations in which $R^2 < 0.90$ were removed from further analysis.
+A weighted least-squares regression (using statsmodels, \url{http://statsmodels.sourceforge.net/}) was performed for $\log d$ vs.\ $\log \Omega$, using the $\log \text{SEM}$ of each measurement as a regression weight (Figure~\ref{fig:vol_calibration}).
+The best fit was found to be $\Omega = 226.3 \pm 9.0$, and was used for subsequent model simulations.
+
+\subsubsection*{Parameter knockdown experiments}
+We replicated the effects of the small molecules KL001 and longdaysin mathematically through the reductions of the $vdcn$ and $vac1p$ parameters, respectively (Tables~\ref{tab:model}-\ref{tab:parset}).
+Knockdown simulations were performed with $20$ values of each parameter, linearly spaced between $100\%$ and $15\%$ of their nominal value.
+Similar to the volume calibration simulations, $10$ independent populations of $1,000$ oscillators were simulated from an initially entrained state.
+Means and standard errors in period and damping rate were calculated from each population-averaged trajectory.
+Simulations in which $R^2 < 0.90$ were removed from further analysis.
+
+\subsection*{Fitting the genome-wide siRNA screen}
+We analyzed the data and annotations for the $111,743$ wells ($T_s = 2,\ N = 72$) in the Zhang {\itshape et al.,} 2009 screen \cite{Zhang2009}.
+Fits for which the $R^2 < 0.80$ were discarded.
+The natural logarithm of the amplitude was used, since it more closely resembled a normal distribution and was on a similar scale to the damping rate.
+Plate to plate variation, as shown in Figure~\ref{fig:plate_variation}, was more severe than variation on a well-to-well basis, Figure~\ref{fig:well_variation}.
+Parameters were therefore normalized on a plate-by-plate basis using a robust z-score \cite{Birmingham2009}:
+\[
+  z_{R,i} = \frac{p_i - M(p_i)}{M\left(\left|p_i - M(p_i)\right|\right)}, \qquad i \in \{0, \dots, {\cal P} - 1 \}
+\]
+where $M(\cdot)$ denotes the median of a vector, and $p_i$ contains all the points in one plate, and $\cal P$ is the number of plates.
+We removed outlier points prior to calculating the moments of the distributions, Pearson correlation coefficients, and performing the multivariable linear regression.
+Outliers were defined as points which contained a z-metric (in either period, phase, amplitude, or damping rate) with an absolute value greater than eight.
+We chose the ``control'' wells to be those which contained no siRNA, as these proved to be more numerous than those containing reference siRNA perturbations and were clustered similarly to the highest-density regions of the perturbed fits.
+
+\subsubsection*{Detecting outlier perturbations}
+We found the average response to each gene perturbation by grouping the perturbed dataset by target gene ID (using pandas, \url{http://pandas.pydata.org/}).
+A Hotelling's $T^2$ test was used to determine whether the means of each gene knockdown was significantly different from the control population.
+A robust covariance estimator was used to find the location and covariance of the control distribution (using scikit-learn).
+Because the control distribution ($n=11,253$) is much larger than that for any particular gene ID ($n \approx 4$), the effect of the perturbed sample on the pooled covariance was neglected.
+
+\subsection*{Software}
+All computations were performed using Python.
+Code used to perform the analysis and produce the figures in this manuscript can be found online at \url{https://github.com/pstjohn/decay-methods}.
 
 
 \section*{Acknowledgments}
