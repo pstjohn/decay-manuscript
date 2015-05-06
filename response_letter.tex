@@ -83,9 +83,8 @@ We agree that additional discussion of this point in manuscript is necessary, an
 
 \begin{manuscript}{Page 3}
 Bioluminescence rhythms at the cell culture or tissue-level are the result of the collective behavior of thousands of cells. 
-{\bfseries
-  Transcription at the single-cell level is strongly affected by {\itshape intrinsic} cellular noise, caused by the low molecular counts of the mRNA and protein species involved. As a result, bioluminescence traces of individual cells are stochastic, with significant variability in both amplitude and period length from cycle to cycle (14). In addition to intrinsic noise, circadian oscillations are also affected by {\itshape extrinsic} noise sources. Extrinsic noise results from heterogeneity between cells, such as differences in size or physical environment, leading to differences on a cell-to-cell basis in expected period and amplitude. For circadian systems, intrinsic noise has been shown to play a larger role: a single cell's variability in period from cycle-to-cycle is larger than the variability in mean period length between cells (2). Both sources of noise have an effect on population-level rhythms: in cell cultures that lack cell-to-cell coupling, it has been shown that stochastic noise is manifested in damped oscillations at the population-level as individual oscillators gradually drift out of phase (14, 15).
-}
+Transcription at the single-cell level is strongly affected by {\bfseries {\itshape intrinsic} cellular noise, caused by} the low molecular counts of the mRNA and protein species involved. As a result, bioluminescence traces of individual cells are stochastic, with significant variability in both amplitude and period length from {\bfseries cycle to cycle (14). In addition to intrinsic noise, circadian oscillations are also affected by {\itshape extrinsic} noise sources. Extrinsic noise results from heterogeneity between cells, such as differences in size or physical environment, leading to differences on a cell-to-cell basis in expected period and amplitude. For circadian systems, intrinsic noise has been shown to play a larger role: a single cell's variability in period from cycle-to-cycle is larger than the variability in mean period length between cells (2). Both sources of noise have an effect on population-level rhythms:} in cell cultures that lack cell-to-cell coupling, {\bfseries it has been shown that stochastic noise} is manifested in damped oscillations at the population-level as individual oscillators gradually drift out of phase (14, 15).
+
 \end{manuscript}
 
 Additionally, {\bfseries we have updated the language throughout the manuscript} to use the intrinsic and extrinsic vocabulary to refer to noise generated within the cell or outside the cell, respectively.
@@ -106,21 +105,20 @@ We conclude that while pure intrinsic vs.\ pure extrinsic dephasing can be disti
 While this revision does correct a statement in our previous version, we note that main parameter of biological interest is the overall stochastic noise from both sources, which is still being identified by the method.
 We have therefore updated the corresponding section of our manuscript to discuss the possibility and implications of changes to extrinsic noise:
 
-\begin{manuscript}{Page 13}
+\begin{manuscript}{Page 8}
   \section*{Effect of cell heterogeneity}
   {\bfseries
 In the preceding sections, we have demonstrated that changes to single-cell intrinsic noise are sufficient to explain the observed changes in population-level damping. 
-However, experimental work has shown that cell-autonomous fibroblast cells have a distribution of mean free-running periods (21). 
+However, experimental} work has shown that cell-autonomous fibroblast cells have a distribution of mean free-running periods (21). 
 Indeed, prior to the availability of single-cell data, studies explored the possibility that differences in mean periods served as the mechanism behind population-level damping (30). 
-While it is true that the dephasing of a group of oscillators can be caused by both variance in the mean period as well as cycle-to-cycle variability, intrinsic stochastic noise likely plays a more significant role: we show that there is greater variance in period on a cycle-to-cycle basis than on a cell-to-cell basis in cultured fibroblast cells (Figure S5). 
+While it is true that the dephasing of a group of oscillators can be caused by both variance in the mean period as well as cycle-to-cycle variability, {\bfseries intrinsic stochastic noise likely plays a more significant role}: we show that there is greater variance in period on a cycle-to-cycle basis than on a cell-to-cell basis {\bfseries in cultured fibroblast cells (Figure S5). 
 This result has also been observed in dispersed SCN neurons, indicating cell heterogeneity is less severe than cell-autonomous noise (2).
 
 However, it is possible that damping rate changes due to siRNA or small molecule perturbation could be manifested through altering the system's extrinsic noise. 
 Such a change, caused perhaps by an unequal uptake of drug across cells, would result increased cell heterogeneity, and different dephasing kinetics. 
 While differentiating between intrinsic and extrinsic noise sources from population-level data is possible in theory (Figure S6), these differences are likely not identifiable from typical data (Figure S7). 
 Differences in damping rates are therefore best viewed as representative of changes to overall stochastic noise from both intrinsic and extrinsic factors. 
-Since both types of noise are important to determining the overall function of population-level rhythms, damping rates are still a valuable method of quantifying stochastic noise.
-}
+Since both types of noise are important to determining the overall function of population-level rhythms, damping rates are still a valuable method of quantifying stochastic noise.}
 \end{manuscript}
 
 
@@ -133,7 +131,7 @@ The increase in variance in Table 1, however, is most likely due to the variety 
 At the single-cell level, each cell in the well would experience the same siRNA perturbation, which we suspect would lead to a similar change in period / amplitude. This is echoed by the consistency seen in the control wells.
 As this was perhaps a misunderstanding of the figure, we have added the following text to the caption of Figure 5:
 
-\begin{manuscript}{Page 5}
+\begin{manuscript}{Page 7}
   Figure 5: Distributions in fitted parameters for the genome-wide siRNA screen. {\bfseries For each well in the high-throughput screen, the period, amplitude and damping rate are calculated. After normalization,} distributions in robust z-scores closely resemble normal distributions. For all parameters, the region of highest density is consistent between the control and perturbed populations, indicating many perturbations do not appreciably change clock dynamics. 
 \end{manuscript}
 
@@ -170,11 +168,11 @@ Since frequency bins are halved at each interval, the (8hr, 256hr) component rep
 
 We have added additional text to the methods section detailing the wavelet transform we used
 
-\begin{manuscript}{Pages 4-5}
+\begin{manuscript}{Pages 10}
   As was done in the original study, a discrete wavelet transform (using PyWavelets, \url{http://www.pybytes.com/pywavelets}) was performed to detrend and remove noise. {\bfseries A discrete wavelet transform decomposes the signal into multiple frequency bands (25). By only considering frequency bands close to the circadian frequency, high-frequency noise and low-frequency baseline oscillations can be removed.}
 \end{manuscript}
 
-\begin{manuscript}{Page 5}
+\begin{manuscript}{Page 10}
 As in the original study, various parameters describing the average noise level of each cell were collected.
 {\bfseries
 Traces were denoised and detrended by keeping only the $(8 \text{hr}, 258 \text{hr})$ wavelet components -- resulting in rhythms which only contained oscillations with periods between 8 and 258 hours.
@@ -208,7 +206,7 @@ We note that we do not intend {\itshape damping} to imply reduced amplitude.
 Instead, we use damping to indicate the rate at which the amplitude decays.
 Our analysis of the effect of noise on damping rate apply mainly to changes in noise and the resulting changes in exponential amplitude decay. We have added text to the manuscript to make our choice in vocabulary more clear:
 
-\begin{manuscript}{Page 4}
+\begin{manuscript}{Page 10}
  For numerical efficiency, the period, $T$, and damping rate, $d$, parameters are fit first using a matrix pencil method (24), reviewed in (25).
 Amplitude, $A$, and phase, $\theta$, parameters are subsequently fit using a linear least-squares regression.
 {\bfseries
@@ -235,7 +233,7 @@ The deviation from the exponential window is likely due to the limit cycle not b
 
 We thank the reviewer for suggesting the control experiment, which we performed almost exactly as described. The results of these computations have been added as Figure S7:
 
-\begin{manuscript}{Page 22}
+\begin{manuscript}{Page 16}
   \begin{center}
   \includegraphics[width=0.51\textwidth]{figures/pdfs/FigS7.pdf}
   \end{center}
@@ -260,7 +258,7 @@ More important than the sampling rate is the overall duration of the experiment,
 
 The following paragraph was added to the discussion to address practical considerations in experimental design and method choice:
 
-\begin{manuscript}{Page 15}
+\begin{manuscript}{Page 9}
  In this study, we have described a method by which changes to stochastic noise can be estimated from population-level circadian bioluminescence recordings.
  {\bfseries
 An overview of the computational steps involved in this method are outlined in Figure~S8.
@@ -275,9 +273,9 @@ While we prioritized computationally efficient methods (which could be scaled to
 
 Additionally, we have added a supplemental figure, Figure S8, to provide a more detailed overview of the method:
 
-\begin{manuscript}{Page 23}
+\begin{manuscript}{Page 16}
   \begin{center}
-  \includegraphics[width=0.8\textwidth]{figures/pdfs/flowchart_schematic.pdf}
+  \includegraphics[width=0.8\textwidth]{figures/pdfs/FigS8.pdf}
   \end{center}
 {\bfseries Figure S8: Overview of the computational method.} ({\bfseries A}) Raw bioluminescence traces are collected from cultured cells. Since the method is mainly dependent on amplitude over time, longer experiments yield more identifiable damping rates. ({\bfseries B}) Raw traces are detrended and denoised. This can be accomplished using a variety of methods, including the discrete wavelet transform. ({\bfseries C}) The window of the oscillations (amplitude vs.\ time) is plotted on a semi-log axis to make the exponential damping apparent. Window functions can be calculated using a Hilbert transform, or simply by using the absolute value of the local peaks (as was done here). A linear regression of the window function in semi-log space will yield both the initial amplitude (intercept) and damping rate (slope), with care being taken to avoid the over-influence of outlier points. Standard statistical techniques could then be used to verify that differences in slope are indeed significant.
 \end{manuscript}
@@ -302,7 +300,7 @@ Relating to question M1, the authors refer to their previous work, ref. 23, wher
 
 We have largely re-worded this section of the text in response to the comments of other reviewers. Despite this, we have added a further citation to Rougement \& Naef, as they present a more detailed theoretical analysis of the windowing function:
 
-\begin{manuscript}{Page 21}
+\begin{manuscript}{Page 16}
    ({\itshape Right}) A deterministic, heterogeneous population dephases due to different free-running periods. In this case, the population displays ballistic phase diffusion, in which envelope of the population-averaged expression changes proportionally to $t^2$. {\bfseries (See Rougemont \& Naef, 2007 (22) for a more detailed discussion).}
 \end{manuscript}
 
@@ -315,7 +313,7 @@ On p. 3, comments regarding reference 17: these authors rather submitted that ei
 We thank the reviewer for catching this inconsistency, have have updated the text accordingly:
 
 \begin{manuscript}{Page 3}
-  Additional studies have suggested that the basis of single-cell rhythmicity may depend on stochastic noise, as models of deterministically damped oscillators, when simulated stochastically, {\bfseries capture the noise characteristics seen in single-cell fibroblast data equally well as limit-cycle oscillators (20).}
+  Additional studies have suggested that the basis of single-cell rhythmicity may depend on stochastic noise, as models of deterministically damped oscillators, when simulated stochastically, capture the noise characteristics seen in single-cell fibroblast data {\bfseries equally well as limit-cycle oscillators (20).}
 \end{manuscript}
 
 However, we note that our assumptions and the concept of noise-driven oscillators are not necessarily exclusive. In the cited work, the authors demonstrate that given a constant noise input, the damped oscillator filters the noise to amplify noise in the circadian frequencies. This yields an oscillator with similarly sustained amplitudes to a noisy limit-cycle.
@@ -328,9 +326,9 @@ In addition to expanding the discussion on cellular noise in response to a previ
 
 \begin{manuscript}{Page 3}
   {\bfseries
-  The amount of noise in system is therefore linked to the ability of tissue-level clocks to maintain high-amplitude rhythms. 
+  The amount of noise in system is therefore linked to the ability of tissue-level clocks to maintain high-amplitude rhythms. }
 
-Despite the averaging that occurs at the population-level, cell-autonomous stochastic noise plays an important role in determining the function of the circadian oscillator. Noise in circadian rhythms has long been considered an important factor in how circadian rhythms have evolved (18).} A recent study showed that stochasticity is critical to the population-level response to a neuropeptide and forms the basis for how the SCN entrains to light-mediated cues (19).
+Despite the averaging that occurs at the population-level, cell-autonomous stochastic noise plays an important role in determining the function of the circadian oscillator. {\bfseries Noise in circadian rhythms has long been considered an important factor in how circadian rhythms have evolved (18).} A recent study showed that stochasticity is critical to the population-level response to a neuropeptide and forms the basis for how the SCN entrains to light-mediated cues (19).
 \end{manuscript}
 
 We also note that the importance of amplitude boosting is linked to the measurement of noise, as noise likely plays a key role in determining the rate at which rhythms damp in peripheral tissues.
