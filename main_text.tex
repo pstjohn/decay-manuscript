@@ -146,7 +146,7 @@ Cells were sorted into two groups, a low-noise group and a high-noise group, bas
 Example rhythms from cells in both groups are shown in Figure~\ref{fig:fibroblast_noise}A.
 Because the cells were not synchronized at the start of the recording, this effect is replicated {\itshape in silico} by shifting each series in time to align their start phases.
 Population-level bioluminescence traces were then found by averaging the cellular PER2::LUC signal in each group.
-Both populations displayed averaged rhythms which resembled a damped sinusoid, similar to those seen in bioluminescence recordings of entire cell cultures.
+Both populations displayed averaged rhythms that resembled a damped sinusoid, similar to those seen in bioluminescence recordings of entire cell cultures.
 Fitting the averaged expression of each group with a damped sinusoid revealed that the low-noise group also had a lower damping rate (Figure~\ref{fig:fibroblast_noise}B).
 The significance of this difference was confirmed via a bootstrap analysis (Figure~\ref{fig:fibroblast_noise}C), where cells were randomly assigned in each bootstrap trial to either the low-noise or the high-noise group.
 
@@ -287,7 +287,7 @@ These results reinforce the notion that the population-level damping rate descri
 The ability of a population of oscillators to maintain robust oscillations is a function both of its initial amplitude as well as its damping rate.
 A robust oscillator is therefore one with high initial amplitude and low stochastic noise.
 Scatter plots of the control and perturbed distributions are shown in Figure~\ref{fig:outlier_dist}A-B, which indicate that few outlier points reside in the lower damping rate, higher amplitude quadrant.
-In order to find perturbations which confidently change robustness, we grouped the siRNA perturbations by target gene and performed a two-sample Hotelling's $T^2$ test against the control population.
+In order to find perturbations that confidently change robustness, we grouped the siRNA perturbations by target gene and performed a two-sample Hotelling's $T^2$ test against the control population.
 The resulting significant gene perturbations ($75\%$ of all genes) are shown in Figure~\ref{fig:outlier_dist}C.
 Quantifying the distribution in outliers by quadrant, it is clear that only a small minority of perturbations ($3.3\%$) simultaneously increase amplitude and decrease stochastic noise.
 It therefore appears that the unperturbed clock optimizes some trade-off between high amplitude and low stochastic noise, such that it is unlikely the knockdown of a single gene will make oscillations more robust. 
@@ -299,7 +299,7 @@ It therefore appears that the unperturbed clock optimizes some trade-off between
   \caption{{\bfseries Effects of siRNA knockdowns on amplitude and damping rate.}
   Clock robustness is a function of both amplitude and damping rate.
   Distributions in amplitude and damping rate for control wells ({\bfseries A}) or perturbed wells ({\bfseries B}) indicate that perturbations tend to shift the clock towards regions of higher damping rate or lower amplitude. Green dots in each figure indicates the mean of the control population.
-({\bfseries C}) Averaged effect of siRNA knockdown after grouping the perturbed population by Gene ID. Only those genes which were significantly different from the control distribution are shown (Hotelling's $T^2$ test, $\alpha = 0.01$).
+({\bfseries C}) Averaged effect of siRNA knockdown after grouping the perturbed population by Gene ID. Only those genes that were significantly different from the control distribution are shown (Hotelling's $T^2$ test, $\alpha = 0.01$).
 ({\bfseries D}) Radial histogram of the significant gene perturbations shown in (C). The area of each slice is proportional to the frequency of perturbations away from the mean in that direction. Very few gene knockdowns result in both higher amplitude and lower damping rate (red slices, lower right quadrant).
 }
 \label{fig:outlier_dist}
@@ -331,12 +331,12 @@ While achieving such a rate is typically not difficult for bioluminescence exper
 We also note that there are many available tools for detrending and regressing time-series data.
 While we prioritized computationally efficient methods (which could be scaled to genome-wide screens), the best methods for any particular application may vary depending on the data.
 
-As high amplitude circadian oscillations are important for maintaining metabolic health, many studies have sought to find small molecule candidates which increase oscillatory amplitude \cite{Chen2013}.
+As high amplitude circadian oscillations are important for maintaining metabolic health, many studies have sought to find small molecule candidates that increase oscillatory amplitude \cite{Chen2013}.
 In the search for circadian clock therapeutics, high-throughput methods are frequently used to screen for such drugs, often neglecting potential effects on cell-autonomous noise.
 While we have demonstrated a method by which the effects of small molecules on noise can be inferred from high-throughput methods, we have also shown that the potential improvement of clock robustness may be limited.
-Amplitudes of circadian rhythms may therefore be best increased by small molecule therapies which act transiently to synchronize peripheral oscillators.
+Amplitudes of circadian rhythms may therefore be best increased by small molecule therapies that act transiently to synchronize peripheral oscillators.
 While such a method would require accurate alignment of drug administration to the correct circadian phase, a recent {\itshape in silico} study has demonstrated the potential effectiveness of such an approach in improving amplitudes in peripheral tissues \cite{St.John2014a}.
-Finally, the ability to extract an additional biologically relevant parameter from existing datasets will likely prove useful for many studies, as it allows further differentiation between perturbations which might otherwise have identical effects on bioluminescence rhythms.
+Finally, the ability to extract an additional biologically relevant parameter from existing datasets will likely prove useful for many studies, as it allows further differentiation between perturbations that might otherwise have identical effects on bioluminescence rhythms.
 
 \section*{Materials and Methods}
 
@@ -351,7 +351,7 @@ A damped sinusoid, specified by:
 is then fit to the filtered data.
 For numerical efficiency, the period, $T$, and damping rate, $d$, parameters are fit first using a matrix pencil method \cite{Hua1990}, reviewed in \cite{Zielinski2011}.
 Amplitude, $A$, and phase, $\theta$, parameters are subsequently fit using a linear least-squares regression.
-Note that in this manuscript we use amplitude to denote the initial rhythm strength, and damping rate to denote the rate at which this strength decays with time.
+Note that in this manuscript we use {\itshape amplitude} to denote the initial rhythm strength, and {\itshape damping rate} to denote the rate at which this strength decays with time.
 Overall $R^2$ values for the regression were calculated from the residual error between the detrended data and fitted sinusoid:
 \[
   R^2 = 1 - \frac{\sum_{i = 0}^{N-1} (y(t_i) - \hat{y}(t_i))^2}{\sum_{i = 0}^{N-1} (y(t_i) - \bar{y}(t_i))^2}
@@ -368,7 +368,7 @@ By only considering frequency bands close to the circadian frequency, high-frequ
 
 \subsubsection*{Sorting cells by noise level}
 As in the original study, various parameters describing the average noise level of each cell were collected.
-Traces were denoised and detrended by keeping only the $(8 \text{hr}, 258 \text{hr})$ wavelet components -- resulting in rhythms which only contained oscillations with periods between 8 and 258 hours.
+Traces were denoised and detrended by keeping only the $(8 \text{hr}, 258 \text{hr})$ wavelet components -- resulting in rhythms that only contained oscillations with periods between 8 and 258 hours.
 From these smoothed trajectories, a Hilbert transform was used estimate points at which the phase crossed $0$ to find period and amplitude coefficients of variation.
 An additional noise parameter, the standard deviation in the $(1 \text{hr}, 8 \text{hr})$ wavelet components divided by the overall rhythm amplitude, was used to quantify the high-frequency noise of the system.
 This wavelet component was chosen as it contained only the highest-frequency noise in the signal's spectrum.
@@ -424,8 +424,8 @@ Parameters were therefore normalized on a plate-by-plate basis using a robust z-
 \]
 where $M(\cdot)$ denotes the median of a vector, and $p_i$ contains all the points in one plate, and $\cal P$ is the number of plates.
 We removed outlier points prior to calculating the moments of the distributions, Pearson correlation coefficients, and performing the multivariable linear regression.
-Outliers were defined as points which contained a z-metric (in either period, phase, amplitude, or damping rate) with an absolute value greater than eight.
-We chose the ``control'' wells to be those which contained no siRNA, as these proved to be more numerous than those containing reference siRNA perturbations and were clustered similarly to the highest-density regions of the perturbed fits.
+Outliers were defined as points that contained a z-metric (in either period, phase, amplitude, or damping rate) with an absolute value greater than eight.
+We chose the ``control'' wells to be those that contained no siRNA, as these proved to be more numerous than those containing reference siRNA perturbations and were clustered similarly to the highest-density regions of the perturbed fits.
 
 \subsubsection*{Detecting outlier perturbations}
 We found the average response to each gene perturbation by grouping the perturbed dataset by target gene ID (using pandas, \url{http://pandas.pydata.org/}).
@@ -480,7 +480,7 @@ This work was supported by the National Institutes of Health/National Institute 
   \begin{center}
     % \includegraphics[width=0.8\textwidth]{figures/pdfs/FigS4.pdf}
   \end{center}
-  \caption{{\bfseries Well-to-well variation in the Zhang {\itshape et al.,} 2009 genome-wide siRNA screen.} Similar to Figure~\ref{fig:plate_variation}, dots indicate the median value of each parameter in each well, with lines extending from the $5^\text{th}$ to $95^\text{th}$ percentile. Well position did not seem to affect the fitted values, particularly in the middle regions which contained the siRNA knockdown library. Wells on either end showed significant variation, but these are likely due to the spotting of long- and short-period controls in the same position on each plate.}
+  \caption{{\bfseries Well-to-well variation in the Zhang {\itshape et al.,} 2009 genome-wide siRNA screen.} Similar to Figure~\ref{fig:plate_variation}, dots indicate the median value of each parameter in each well, with lines extending from the $5^\text{th}$ to $95^\text{th}$ percentile. Well position did not seem to affect the fitted values, particularly in the middle regions that contained the siRNA knockdown library. Wells on either end showed significant variation, but these are likely due to the spotting of long- and short-period controls in the same position on each plate.}
 \label{fig:well_variation}
 \end{figure}
 
@@ -641,7 +641,7 @@ This work was supported by the National Institutes of Health/National Institute 
 \bottomrule
 \end{tabular}
 \end{center} 
-\caption{{\bfseries Multivariable linear regression results.} Fit statistics which demonstrate the effect of each other fitted parameter on damping rate. Of particular note is the perturbation type categorical variable, which demonstrates that the presence of siRNA perturbation increases damping rate on average, controlling for changes in other variables. Higher amplitude is also correlated with higher damping rate. However, in total damping rate is poorly predicted by the other fitted variables ($R^2 = 0.169$), indicating it describes an independent oscillatory feature.}
+\caption{{\bfseries Multivariable linear regression results.} Fit statistics that demonstrate the effect of each other fitted parameter on damping rate. Of particular note is the perturbation type categorical variable, which demonstrates that the presence of siRNA perturbation increases damping rate on average, controlling for changes in other variables. Higher amplitude is also correlated with higher damping rate. However, in total damping rate is poorly predicted by the other fitted variables ($R^2 = 0.169$), indicating it describes an independent oscillatory feature.}
 \label{tab:ols_reg}
 \end{table}
 
