@@ -4,6 +4,7 @@
 methods.tar.gz
 main_text.pdf
 response_letter.pdf
+diff*
 
 *.docx
 
