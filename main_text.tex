@@ -135,7 +135,7 @@ Using this additional information, we show that circadian rhythms have likely ev
 Our results should prove especially important in the future search for small molecule circadian therapeutics, as it allows the effect of candidate drugs on stochastic noise to be quantified in a high-throughput manner.
 
 
-\section*{Results and Discussion}
+\section*{Results}
 
 \subsection*{Higher noise results in faster damping in population-level rhythms}
 
@@ -320,6 +320,24 @@ Differences in damping rates are therefore best viewed as representative of chan
 Since both types of noise are important to determining the overall function of population-level rhythms, damping rates are still a valuable method of quantifying stochastic noise.
 
 
+\section*{Discussion}
+
+In this study, we have described a method by which changes to stochastic noise can be estimated from population-level circadian bioluminescence recordings.
+An overview of the computational steps involved in this method are outlined in Figure~\ref{fig:comp_overview}.
+While the method can be applied to existing experimental data, there are also practical considerations for the design of future experiments.
+Because the damping rate must be inferred from the time-varying amplitude, collecting bioluminescence data for longer time periods yields more accurate results and reduces the potential impact of initial transient regions.
+Additionally, a sampling rate that is high enough to confidently capture the peaks and troughs of gene expression is required -- in this study, the 2 hr sampling window of the siRNA screen proved sufficient.
+While achieving such a rate is typically not difficult for bioluminescence experiments, it may limit the method's applicability in experiments where samples need to be analyzed at each time point.
+We also note that there are many available tools for detrending and regressing time-series data.
+While we prioritized computationally efficient methods (which could be scaled to genome-wide screens), the best methods for any particular application may vary depending on the data.
+
+As high amplitude circadian oscillations are important for maintaining metabolic health, many studies have sought to find small molecule candidates which increase oscillatory amplitude \cite{Chen2013}.
+In the search for circadian clock therapeutics, high-throughput methods are frequently used to screen for such drugs, often neglecting potential effects on cell-autonomous noise.
+While we have demonstrated a method by which the effects of small molecules on noise can be inferred from high-throughput methods, we have also shown that the potential improvement of clock robustness may be limited.
+Amplitudes of circadian rhythms may therefore be best increased by small molecule therapies which act transiently to synchronize peripheral oscillators.
+While such a method would require accurate alignment of drug administration to the correct circadian phase, a recent {\itshape in silico} study has demonstrated the potential effectiveness of such an approach in improving amplitudes in peripheral tissues \cite{St.John2014a}.
+Finally, the ability to extract an additional biologically relevant parameter from existing datasets will likely prove useful for many studies, as it allows further differentiation between perturbations which might otherwise have identical effects on bioluminescence rhythms.
+
 \section*{Materials and Methods}
 
 \subsection*{Fitting a damped sinusoid to experimental data}
@@ -421,29 +439,6 @@ Code used to perform the analysis and produce the figures in this manuscript can
 
 
 
-\section*{Conclusion}
-
-% Our method assumes independent and sustained oscillators at the single-cell level.
-% While these assumptions have not always been upheld in the circadian literature \cite{Izumo2003}, more recent studies have demonstrated the validity of these assumptions in cultured fibroblast cells.
-% Earlier mathematical studies have analysed on the damping rate of oscillators without assuming independent or homogeneous populations \cite{Rougemont2007}.
-% However, such approaches introduce many additional fitted parameters, limiting their applicability to high-throughput screens.
-
-
-In this study, we have described a method by which changes to stochastic noise can be estimated from population-level circadian bioluminescence recordings.
-An overview of the computational steps involved in this method are outlined in Figure~\ref{fig:comp_overview}.
-While the method can be applied to existing experimental data, there are also practical considerations for the design of future experiments.
-Because the damping rate must be inferred from the time-varying amplitude, collecting bioluminescence data for longer time periods yields more accurate results and reduces the potential impact of initial transient regions.
-Additionally, a sampling rate that is high enough to confidently capture the peaks and troughs of gene expression is required -- in this study, the 2 hr sampling window of the siRNA screen proved sufficient.
-While achieving such a rate is typically not difficult for bioluminescence experiments, it may limit the method's applicability in experiments where samples need to be analyzed at each time point.
-We also note that there are many available tools for detrending and regressing time-series data.
-While we prioritized computationally efficient methods (which could be scaled to genome-wide screens), the best methods for any particular application may vary depending on the data.
-
-As high amplitude circadian oscillations are important for maintaining metabolic health, many studies have sought to find small molecule candidates which increase oscillatory amplitude \cite{Chen2013}.
-In the search for circadian clock therapeutics, high-throughput methods are frequently used to screen for such drugs, often neglecting potential effects on cell-autonomous noise.
-While we have demonstrated a method by which the effects of small molecules on noise can be inferred from high-throughput methods, we have also shown that the potential improvement of clock robustness may be limited.
-Amplitudes of circadian rhythms may therefore be best increased by small molecule therapies which act transiently to synchronize peripheral oscillators.
-While such a method would require accurate alignment of drug administration to the correct circadian phase, a recent {\itshape in silico} study has demonstrated the potential effectiveness of such an approach in improving amplitudes in peripheral tissues \cite{St.John2014a}.
-Finally, the ability to extract an additional biologically relevant parameter from existing datasets will likely prove useful for many studies, as it allows further differentiation between perturbations which might otherwise have identical effects on bioluminescence rhythms.
 
 
 
