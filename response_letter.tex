@@ -53,7 +53,7 @@ Associate Editor\\
 PLOS Computational Biology\\
 
 {\itshape Douglas Lauffenburger}\\
-Associate Editor\\
+Deputy Editor\\
 PLOS Computational Biology\\
 
 Thank you for your email on April 20th, 2015, inviting us to submit a revised version of our manuscript, ``Quantifying stochastic noise in cultured circadian reporter cells'' (MS: PCOMPBIOL-D-15-00431) by Peter C. St. John and Francis J. Doyle~III.
@@ -237,7 +237,7 @@ Main concerns:
 M1. The author's comments notwithstanding, there are some concerns regarding the possible contribution of period heterogeneity to the quantified population damping. Specifically, the decays in Fig 3A actually looks somewhat like the decay in theoretical Figure S6, right panel, which was computed assuming period heterogeneity. Of course, the authors convincingly show that population period heterogeneity is less than peak-to-peak variation in percent. I still request a control experiment, in which simulated time-series of observed peak-to-peak variation AND observed population period heterogeneity are analyzed with the authors' algorithm. The method should be shown to work as for instance noise levels are increased or decreased also for this case. This could be a complement to Figure 1C, where the same thing was done for oscillators with identical period.
 \end{reviewer}
 
-These concerns were also shared by the first reviewer, and we have therefore {\bfseries substantially changed the language of the study to reflect the fact that extrinsic noise (period heterogeneity) could play a role in the damping rates.}
+These concerns were also shared by the first reviewer, and we have therefore {\bfseries substantially changed the language of the study to reflect the fact that extrinsic noise (period heterogeneity) could play a role in the damping rates} (see page 3 of this response).
 For Fig. 3A, these profiles were obtained from a mathematical model of homogeneous cells.
 The deviation from the exponential window is likely due to the limit cycle not being a perfect sinusoid.
 
@@ -307,7 +307,7 @@ Minor concerns:
 Relating to question M1, the authors refer to their previous work, ref. 23, where it was shown that phase drift leads to an exponentially decreasing population signal. Otoh, period heterogeneity would lead to a time-squared exponent; where is the latter formula derived? If this was done by Rougemont and Naef, they should be cited.
 \end{reviewer}
 
-{\bfseries We have largely re-worded this section of the text} in response to the comments of other reviewers. Despite this, we have added a further citation to Rougement \& Naef, as they present a more detailed theoretical analysis of the windowing function:
+{\bfseries We have largely re-worded this section of the text} in response to the comments of other reviewers (see page 3 of this response). Despite this, we have added a further citation to Rougement \& Naef, as they present a more detailed theoretical analysis of the windowing function:
 
 \begin{manuscript}{Page 16}
    ({\itshape Right}) A deterministic, heterogeneous population dephases due to different free-running periods. In this case, the population displays ballistic phase diffusion, in which envelope of the population-averaged expression changes proportionally to $t^2$. {\bfseries (See Rougemont \& Naef, 2007 (22) for a more detailed discussion).}
@@ -348,7 +348,7 @@ For the discussion: authors argue that the amplitude/noise ratio seem to have ev
 
 This is an interesting point. We are careful in saying that there may indeed be perturbations or knockouts that shift the clock to a region of higher stability, but that on average perturbations tend to lead to less robust rhythms.
 
-We sadly don't have access to the raw data of Liu et al.\ to look more closely at their observations. In the genome-wide siRNA screen, however, Cry2 knockdown was one of the several positive controls run in each plate.
+We unfortunately do not have access to the raw data of Liu et al.\ to look more closely at their observations. In the genome-wide siRNA screen, however, Cry2 knockdown was one of the several positive controls run in each plate.
 From this data, it seems that Cry2 knockdown seems to simultaneously reduce both the population-level amplitude and damping rate:
 
 \begin{figure}[h!]
