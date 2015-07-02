@@ -12,8 +12,8 @@
 
 \usepackage{color}
 \usepackage{tcolorbox}
-% \tcbuselibrary{breakable}
-% \tcbuselibrary{skins}
+\tcbuselibrary{breakable}
+\tcbuselibrary{skins}
 \usepackage{units}
 
 \usepackage[parfill]{parskip} % For block paragraphs
@@ -21,7 +21,7 @@
 \definecolor{gray}{gray}{0.4}
 \newenvironment{reviewer}{\itshape\color{gray}}{}
 
-% \tcbset{skin=enhanced}
+\tcbset{skin=enhanced}
 
 \newenvironment{manuscript}[1]{\begin{center}\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,width=\textwidth,title={#1},breakable,fonttitle=\bfseries]}{\end{tcolorbox}\end{center}}
 % For hyperref links
@@ -58,7 +58,7 @@ PLOS Computational Biology\\
 
 Thank you for your email on June 23th, 2015, inviting us to submit a further revised version of our manuscript, ``Quantifying stochastic noise in cultured circadian reporter cells'' (MS: PCOMPBIOL-D-15-00431) by Peter C. St. John and Francis J. Doyle~III.
 
-We are pleased to hear that two of the reviewers recommend our work for publication. We thank the reviewers for their second round of thoughtful critiques, which we feel further improves the quality of the manuscript.
+We are pleased to hear that two of the four reviewers recommend our work for publication in {\itshape PLoS Computational Biology}. We thank the reviewers for their second round of thoughtful critiques, which we feel further improves the quality of the manuscript.
 
 Please see our detailed responses to the reviewers below: 
 
@@ -76,13 +76,24 @@ Also, in the revised part of the introduction addressing the role of noise in ch
 \end{reviewer}
 
 \begin{reviewer}
-In the new expanded paragraph discussing the effect of cell period heterogeneity, the authors dismiss the significance of intrinsic differences in period across the population compared to cycle-to-cycle fluctuations and don’t directly quantify the relative contributions. However, Cohen et al (Journal Theoretical Biology 2013) quantified it for this same set of fibroblasts using a Bayesian hierarchical model and found the standard deviation of periods across the population to be 0.89h compared to the within-cell variability 1.43h. So while cycle-to-cycle fluctuations are indeed larger, the variability across the population is still quite substantial, and these values should be mentioned in this section to quantify the relative contributions of these sources of variability to the overall decay rate.
+In the new expanded paragraph discussing the effect of cell period heterogeneity, the authors dismiss the significance of intrinsic differences in period across the population compared to cycle-to-cycle fluctuations and don't directly quantify the relative contributions. However, Cohen et al (Journal Theoretical Biology 2013) quantified it for this same set of fibroblasts using a Bayesian hierarchical model and found the standard deviation of periods across the population to be 0.89h compared to the within-cell variability 1.43h. So while cycle-to-cycle fluctuations are indeed larger, the variability across the population is still quite substantial, and these values should be mentioned in this section to quantify the relative contributions of these sources of variability to the overall decay rate.
 \end{reviewer}
+
+Indeed, we agree with the reviewer that adding quantitative measures adds to the discussion of the relative importance of intrinsic vs.\ extrinsic period variability. We have therefore added these values from both studies. In addition, we have softened some of the language to avoid dismissing the effect of extrinsic variability, which likely indeed plays a non-negligible role in determining the damping rate.
+
+\begin{manuscript}{Page 6}
+  While it is true that the dephasing of a group of oscillators can be caused by both variance in the mean period as well as cycle-to-cycle variability, intrinsic stochastic noise {\bf may} play a more significant role. 
+{\bf We} show that there is greater variance in period on a cycle-to-cycle basis than on a cell-to-cell basis in cultured fibroblast cells {\bf (Figure S5): individual cell period lengths have an average inner quartile range (IQR) of 3.18 h, while cell-to-cell average period has an IQR of 1.55 h. 
+These results are independently confirmed by a previous study using Bayesian modeling, which found a standard deviation of periods within cells of 1.43 h, and 0.89 h across the population (25). 
+A similar} result has also been observed in dispersed SCN neurons, suggesting that while both intrinsic and extrinsic period heterogeneity likely contribute to the dephasing kinetics, cell-to-cell differences are less severe than cell-autonomous noise (2).
+
+{\bf It is also} possible that damping rate changes due to siRNA or small molecule perturbation could be manifested through altering the system's extrinsic noise.
+
+\end{manuscript}
 
 \section*{Reviewer \#4}
 
 \begin{reviewer}
 In short, the authors didn't really address the concern about applying their simple model for deductive reasoning. They claim that as the siRNA method is well-accepted by the circadian community that their interpretation should be legit. Biological response is proportional to dose and target. It seems implicitly that the authors are assuming that the DOSE of siRNA transfected into every individual cell is exactly the same. The biological response is then interpreted solely as being attributed to the target. One look at a flow cytometry result of a siRNA experiment will tell you that the dose is not the same between cells. Different siRNA also don't work equally well either. So again the criticism that the approach is not convincing in providing the claimed insight still is unaddressed.
 \end{reviewer}
-
 \end{document}

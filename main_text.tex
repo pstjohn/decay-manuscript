@@ -211,10 +211,12 @@ It therefore appears that the unperturbed clock optimizes some trade-off between
 In the preceding sections, we have demonstrated that changes to single-cell intrinsic noise are sufficient to explain the observed changes in population-level damping.
 However, experimental work has shown that cell-autonomous fibroblast cells have a distribution of mean free-running periods \cite{Leise2012}.
 Indeed, prior to the availability of single-cell data, studies explored the possibility that differences in mean periods served as the mechanism behind population-level damping \cite{Izumo2003}.
-While it is true that the dephasing of a group of oscillators can be caused by both variance in the mean period as well as cycle-to-cycle variability, intrinsic stochastic noise likely plays a more significant role: we show that there is greater variance in period on a cycle-to-cycle basis than on a cell-to-cell basis in cultured fibroblast cells (Figure~\ref{fig:cell2cell-variability}).
-This result has also been observed in dispersed SCN neurons, indicating cell heterogeneity is less severe than cell-autonomous noise \cite{Herzog2004}.
+While it is true that the dephasing of a group of oscillators can be caused by both variance in the mean period as well as cycle-to-cycle variability, intrinsic stochastic noise may play a more significant role. 
+We show that there is greater variance in period on a cycle-to-cycle basis than on a cell-to-cell basis in cultured fibroblast cells (Figure~\ref{fig:cell2cell-variability}): individual cell period lengths have an average inner quartile range (IQR) of 3.18 h, while cell-to-cell average period has an IQR of 1.55 h. 
+These results are independently confirmed by a previous study using Bayesian modeling, which found a standard deviation of periods within cells of 1.43 h, and 0.89 h across the population \cite{Cohen2012}.
+A similar result has also been observed in dispersed SCN neurons, suggesting that while both intrinsic and extrinsic period heterogeneity likely contribute to the dephasing kinetics, cell-to-cell differences are less severe than cell-autonomous noise \cite{Herzog2004}.
 
-However, it is possible that damping rate changes due to siRNA or small molecule perturbation could be manifested through altering the system's extrinsic noise.
+It is also possible that damping rate changes due to siRNA or small molecule perturbation could be manifested through altering the system's extrinsic noise.
 Such a change, caused perhaps by an unequal uptake of drug across cells, would result increased cell heterogeneity, and different dephasing kinetics.
 While differentiating between intrinsic and extrinsic noise sources from population-level data is possible in theory (Figure~\ref{fig:dephasing-rates}), these differences are likely not identifiable from typical data (Figure~\ref{fig:computational_dephasing}).
 Differences in damping rates are therefore best viewed as representative of changes to overall stochastic noise from both intrinsic and extrinsic factors.
