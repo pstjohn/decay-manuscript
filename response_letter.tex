@@ -69,11 +69,30 @@ The revision improved the manuscript, but a couple of minor issues remain to be 
 The added discussion on types of noise should be revised to include the work of Elowitz et al (Science 2002) on extrinsic vs intrinsic noise. The Elowitz study does quantitatively distinguish extrinsic vs intrinsic noise in their experiments, while the revised manuscript states this is only possible in theory (so the wording should be altered at the bottom of page 6 and the Elowitz study cited). 
 \end{reviewer}
 
+We thank the reviewer for recommending this important study, and agree that further discussion of existing work on biological noise is useful in the introduction. We have therefore added an additional point to the paragraph on intrinsic and extrinsic noise sources:
 
+\begin{manuscript}{Page 3}
+Extrinsic noise results from heterogeneity between cells, such as differences in size or physical environment, leading to differences on a cell-to-cell basis in expected period and amplitude. 
+{\bfseries The effects of noise in biological systems has been well-studied, and relative amounts of intrinsic and extrinsic noise can be identified through carefully designed single-cell experiments (15). }
+For circadian systems, intrinsic noise has been {\bfseries suspected} to play a larger role: a single cell's variability in period from cycle-to-cycle is larger than the variability in mean period length between cells (2).
+\end{manuscript}
+
+For the discussion on page 6 where we describe what can be inferred from experimental data, we had restricted our claims to population-level recordings - whereas the Elowitz study used data from single-cell imaging to differentiate between noise sources. We nevertheless acknowledge the potential for misunderstanding and have added further text describing experimental techniques which might differentiate between noise sources (with a further citation to the work done by Elowitz, {\itshape et al}):
+
+\begin{manuscript}{Pages 6-7}
+It is also possible that damping rate changes due to siRNA or small molecule perturbation could be manifested through altering the system's extrinsic noise. 
+Such a change, caused perhaps by an unequal uptake of drug across cells, would result increased cell heterogeneity, and different dephasing kinetics. 
+While differentiating between intrinsic and extrinsic noise sources from population-level data is possible in theory (Figure S6), these differences are likely not identifiable from typical data (Figure S7). 
+{\bfseries This distinction would be possible with single-cell level data, as has been done in other experimental systems (15). 
+However, such an experiment would likely not be amenable to high-throughput methods.}
+Differences in damping rates are therefore best viewed as representative of changes to overall stochastic noise from both intrinsic and extrinsic factors.
+\end{manuscript}
 
 \begin{reviewer}
 Also, in the revised part of the introduction addressing the role of noise in characterizing oscillations, the work by Bratsun et al (PNAS 2005) should be mentioned as another caution. For instance, they point out that ``the 'noise signature' of a system dominated by delay can be similar to a system dominated by intrinsic noise. This result implies that care must taken in attributing variability to purely stochastic sources, because delay-induced variability can appear empirically similar to fluctuations arising from intrinsic noise.''
 \end{reviewer}
+
+In Bratsun {\itshape et al, PNAS} 2005, the authors demonstrate that variability in gene transcription can occur both through intrinsic noise as well as through fast, deterministic oscillations. While 
 
 \begin{reviewer}
 In the new expanded paragraph discussing the effect of cell period heterogeneity, the authors dismiss the significance of intrinsic differences in period across the population compared to cycle-to-cycle fluctuations and don't directly quantify the relative contributions. However, Cohen et al (Journal Theoretical Biology 2013) quantified it for this same set of fibroblasts using a Bayesian hierarchical model and found the standard deviation of periods across the population to be 0.89h compared to the within-cell variability 1.43h. So while cycle-to-cycle fluctuations are indeed larger, the variability across the population is still quite substantial, and these values should be mentioned in this section to quantify the relative contributions of these sources of variability to the overall decay rate.
@@ -84,7 +103,7 @@ Indeed, we agree with the reviewer that adding quantitative measures adds to the
 \begin{manuscript}{Page 6}
   While it is true that the dephasing of a group of oscillators can be caused by both variance in the mean period as well as cycle-to-cycle variability, intrinsic stochastic noise {\bf may} play a more significant role. 
 {\bf We} show that there is greater variance in period on a cycle-to-cycle basis than on a cell-to-cell basis in cultured fibroblast cells {\bf (Figure S5): individual cell period lengths have an average inner quartile range (IQR) of 3.18 h, while cell-to-cell average period has an IQR of 1.55 h. 
-These results are independently confirmed by a previous study using Bayesian modeling, which found a standard deviation of periods within cells of 1.43 h, and 0.89 h across the population (25). 
+These results are independently confirmed by a previous study using Bayesian modeling, which found a standard deviation of periods within cells of 1.43 h, and 0.89 h across the population (27). 
 A similar} result has also been observed in dispersed SCN neurons, suggesting that while both intrinsic and extrinsic period heterogeneity likely contribute to the dephasing kinetics, cell-to-cell differences are less severe than cell-autonomous noise (2).
 
 {\bf It is also} possible that damping rate changes due to siRNA or small molecule perturbation could be manifested through altering the system's extrinsic noise.
