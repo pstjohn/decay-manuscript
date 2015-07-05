@@ -79,13 +79,12 @@ For circadian systems, intrinsic noise has been {\bfseries suspected} to play a 
 
 For the discussion on page 6 where we describe what can be inferred from experimental data, we had restricted our claims to population-level recordings - whereas the Elowitz study used data from single-cell imaging to differentiate between noise sources. We nevertheless acknowledge the potential for misunderstanding and have added further text describing experimental techniques which might differentiate between noise sources (with a further citation to the work done by Elowitz, {\itshape et al}):
 
-\begin{manuscript}{Pages 6-7}
-It is also possible that damping rate changes due to siRNA or small molecule perturbation could be manifested through altering the system's extrinsic noise. 
-Such a change, caused perhaps by an unequal uptake of drug across cells, would result increased cell heterogeneity, and different dephasing kinetics. 
-While differentiating between intrinsic and extrinsic noise sources from population-level data is possible in theory (Figure S6), these differences are likely not identifiable from typical data (Figure S7). 
-{\bfseries This distinction would be possible with single-cell level data, as has been done in other experimental systems (15). 
-However, such an experiment would likely not be amenable to high-throughput methods.}
-Differences in damping rates are therefore best viewed as representative of changes to overall stochastic noise from both intrinsic and extrinsic factors.
+\begin{manuscript}{Page 7}
+While differentiating between intrinsic and extrinsic noise sources from population-level data is possible in theory (Figure S6), these differences are likely not identifiable from typical {\bfseries population-level} data (Figure S7). 
+{\bfseries This distinction would likely be possible with single-cell level data, as has been done in other experimental systems (15). 
+However, such an experiment would likely not be amenable to high- throughput methods.}
+Differences in damping rates are therefore best viewed as representative of changes to overall stochastic noise from both intrinsic and extrinsic factors. 
+Since both types of noise are important to determining the overall function of population-level rhythms, damping rates are still a valuable method of quantifying stochastic noise.
 \end{manuscript}
 
 \begin{reviewer}
@@ -102,12 +101,11 @@ Indeed, we agree with the reviewer that adding quantitative measures adds to the
 
 \begin{manuscript}{Page 6}
   While it is true that the dephasing of a group of oscillators can be caused by both variance in the mean period as well as cycle-to-cycle variability, intrinsic stochastic noise {\bf may} play a more significant role. 
-{\bf We} show that there is greater variance in period on a cycle-to-cycle basis than on a cell-to-cell basis in cultured fibroblast cells {\bf (Figure S5): individual cell period lengths have an average inner quartile range (IQR) of 3.18 h, while cell-to-cell average period has an IQR of 1.55 h. 
+{\bf We} show that there is greater variance in period on a cycle-to-cycle basis than on a cell-to-cell basis in cultured fibroblast cells {\bf (Figure S5): individual cell period lengths have an average inner quartile range (IQR) of 3.18 hrs, while cell-to-cell average period has an IQR of 1.55 h. 
 These results are independently confirmed by a previous study using Bayesian modeling, which found a standard deviation of periods within cells of 1.43 h, and 0.89 h across the population (27). 
-A similar} result has also been observed in dispersed SCN neurons, suggesting that while both intrinsic and extrinsic period heterogeneity likely contribute to the dephasing kinetics, cell-to-cell differences are less severe than cell-autonomous noise (2).
+A similar} result has also been observed in dispersed SCN neurons, {\bfseries suggesting that while both intrinsic and extrinsic period heterogeneity likely contribute to the dephasing kinetics, cell-to-cell differences are} less severe than cell-autonomous noise (2).
 
 {\bf It is also} possible that damping rate changes due to siRNA or small molecule perturbation could be manifested through altering the system's extrinsic noise.
-
 \end{manuscript}
 
 \section*{Reviewer \#4}
@@ -123,14 +121,24 @@ Different siRNA also don't work equally well either.
 So again the criticism that the approach is not convincing in providing the claimed insight still is unaddressed.
 \end{reviewer}
 
-We agree with the reviewer that the effect of an siRNA on each individual cell will indeed be varied.
+We regret that our previous revision did not address the reviewer's concern about the reasoning generated from each of our {\itshape in silico} experiments.
+We have therefore added an expanded section of the Discussion in which we clearly lay out the insights we claim from each portion of the study:
+
+\begin{manuscript}{Page 7}
+  {\bfseries In this study we have shown that the damping rate of population-level circadian oscillations can be changed by genetic or pharmacological perturbations.
+As populations-level rhythms are determined by the coherence of many individual cells, desynchronization due to stochastic noise is a likely explanation for population-level damping.
+Using single-cell data, we showed that population-level damping rate is proportional to single-cell noise.
+Furthermore, we used a computational model to predict the changes in damping rate from two small molecules, demonstrating that changes to intrinsic stochastic noise are sufficient to explain the observed damping rate changes.}
+\end{manuscript}
+
+In regards to the reviewer's specific comments on siRNA, we agree that the effect of an siRNA on each individual cell will indeed be varied.
 This effect would be manifested in changing the extrinsic noise of the system, as cell heterogeneity would be amplified by the distribution of siRNA effect.
 While we previously mentioned variability in drug uptake as a possible source of cell heterogeneity, we have expanded this section to make the reference to siRNA more explicit:
 
 \begin{manuscript}{Pages 6-7}
 It is also possible that damping rate changes due to siRNA or small molecule perturbation could be manifested through altering the system’s extrinsic noise. 
 {\bfseries Such a change could be caused by an unequal uptake of siRNA or drug on a cell-to-cell basis, as has been demonstrated by a distribution of single-cell knockdown efficiency through flow cytometry (27). 
-This effect would increase cell heterogeneity and lead to faster dephasing kinetics.}
+This effect would increase cell heterogeneity and lead to faster} dephasing kinetics.
 \end{manuscript}
 
 While it is also true that different siRNA constructs will have different knockdown effectivenesses, this will be a systematic effect that will not effect either the intrinsic or extrinsic noise.
@@ -140,9 +148,10 @@ We have added a relevant explanation to the methods section clarifying this poin
 
 \begin{manuscript}{Page 10}
 A Hotelling's $T^2$ test was used to determine whether the means of each gene knockdown was significantly different from the control population.
-While different siRNA constructs will have different knockdown efficiencies, grouping based on gene target helps to eliminate the effect of off-target activities. 
+{\bfseries While different siRNA constructs will have different knockdown efficiencies, grouping based on gene target helps to eliminate the effect of off-target activities.}
 \end{manuscript}
 
+\vspace{3ex}
 
 Once more, we would like to thank each of our reviewers for their time and attention to detail.
 We believe their follow-up critiques have further improved the rigor of this work, and have included our appreciation for their efforts in the acknowledgements.
