@@ -92,7 +92,7 @@ Differences in damping rates are therefore best viewed as representative of chan
 Also, in the revised part of the introduction addressing the role of noise in characterizing oscillations, the work by Bratsun et al (PNAS 2005) should be mentioned as another caution. For instance, they point out that ``the 'noise signature' of a system dominated by delay can be similar to a system dominated by intrinsic noise. This result implies that care must taken in attributing variability to purely stochastic sources, because delay-induced variability can appear empirically similar to fluctuations arising from intrinsic noise.''
 \end{reviewer}
 
-In Bratsun {\itshape et al, PNAS} 2005, the authors demonstrate that variability in gene transcription can occur both through intrinsic noise as well as through fast, deterministic oscillations. While 
+In Bratsun {\itshape et al, PNAS} 2005, the authors demonstrate that variability in the amplitude of gene transcription can occur both through intrinsic noise as well as through fast, deterministic oscillations. While it might be possible that fast oscillations in gene transcription (in addition to the slower, 24-hour circadian rhythms) underly most of the variation seen in ultradian frequencies, it would then be unlikely that we would observe the random drift in phases. Since our study deals mainly with the phase precision rather than the variability in transcription, we have decided to omit this reference to avoid confusing the reader.
 
 \begin{reviewer}
 In the new expanded paragraph discussing the effect of cell period heterogeneity, the authors dismiss the significance of intrinsic differences in period across the population compared to cycle-to-cycle fluctuations and don't directly quantify the relative contributions. However, Cohen et al (Journal Theoretical Biology 2013) quantified it for this same set of fibroblasts using a Bayesian hierarchical model and found the standard deviation of periods across the population to be 0.89h compared to the within-cell variability 1.43h. So while cycle-to-cycle fluctuations are indeed larger, the variability across the population is still quite substantial, and these values should be mentioned in this section to quantify the relative contributions of these sources of variability to the overall decay rate.
@@ -113,6 +113,48 @@ A similar} result has also been observed in dispersed SCN neurons, suggesting th
 \section*{Reviewer \#4}
 
 \begin{reviewer}
-In short, the authors didn't really address the concern about applying their simple model for deductive reasoning. They claim that as the siRNA method is well-accepted by the circadian community that their interpretation should be legit. Biological response is proportional to dose and target. It seems implicitly that the authors are assuming that the DOSE of siRNA transfected into every individual cell is exactly the same. The biological response is then interpreted solely as being attributed to the target. One look at a flow cytometry result of a siRNA experiment will tell you that the dose is not the same between cells. Different siRNA also don't work equally well either. So again the criticism that the approach is not convincing in providing the claimed insight still is unaddressed.
+In short, the authors didn't really address the concern about applying their simple model for deductive reasoning. 
+They claim that as the siRNA method is well-accepted by the circadian community that their interpretation should be legit. 
+Biological response is proportional to dose and target. 
+It seems implicitly that the authors are assuming that the DOSE of siRNA transfected into every individual cell is exactly the same. 
+The biological response is then interpreted solely as being attributed to the target. 
+One look at a flow cytometry result of a siRNA experiment will tell you that the dose is not the same between cells. 
+Different siRNA also don't work equally well either. 
+So again the criticism that the approach is not convincing in providing the claimed insight still is unaddressed.
 \end{reviewer}
+
+We agree with the reviewer that the effect of an siRNA on each individual cell will indeed be varied.
+This effect would be manifested in changing the extrinsic noise of the system, as cell heterogeneity would be amplified by the distribution of siRNA effect.
+While we previously mentioned variability in drug uptake as a possible source of cell heterogeneity, we have expanded this section to make the reference to siRNA more explicit:
+
+\begin{manuscript}{Pages 6-7}
+It is also possible that damping rate changes due to siRNA or small molecule perturbation could be manifested through altering the system’s extrinsic noise. 
+{\bfseries Such a change could be caused by an unequal uptake of siRNA or drug on a cell-to-cell basis, as has been demonstrated by a distribution of single-cell knockdown efficiency through flow cytometry (27). 
+This effect would increase cell heterogeneity and lead to faster dephasing kinetics.}
+\end{manuscript}
+
+While it is also true that different siRNA constructs will have different knockdown effectivenesses, this will be a systematic effect that will not effect either the intrinsic or extrinsic noise.
+In developing our approach, we do not assume that each siRNA will be equally effective - just as the knockdown of different genes will have varied effects on circadian rhythms.
+While we do group siRNA perturbations by target gene, this test mainly serves to guard against off-target activities.
+We have added a relevant explanation to the methods section clarifying this point:
+
+\begin{manuscript}{Page 10}
+A Hotelling's $T^2$ test was used to determine whether the means of each gene knockdown was significantly different from the control population.
+While different siRNA constructs will have different knockdown efficiencies, grouping based on gene target helps to eliminate the effect of off-target activities. 
+\end{manuscript}
+
+
+Once more, we would like to thank each of our reviewers for their time and attention to detail.
+We believe their follow-up critiques have further improved the rigor of this work, and have included our appreciation for their efforts in the acknowledgements.
+
+\vspace{4ex}
+\begin{flushright}
+  Sincerely,\\[2ex]
+
+  \includegraphics[width=0.3\textwidth]{/home/peter/Documents/Research/figures/frank_signature.pdf}\\[1ex]
+Francis J. Doyle III
+\end{flushright}
+
+\end{document}
+
 \end{document}
